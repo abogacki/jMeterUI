@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import './App.css';
+import './App.scss';
 import { Hero, HeroBody, Container, Columns, Column, Box } from 'bloomer';
+import { Input } from 'bloomer/lib/elements/Form/Input';
 
 class App extends Component {
   render() {
@@ -19,6 +20,7 @@ const Layout = props => (<Hero>
         <Column>
           <Box>
             xD
+            <Input />
         </Box>
         </Column>
       </Columns>
