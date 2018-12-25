@@ -35,7 +35,7 @@ const renderTable = data => {
         } 
     } );
 
-    console.log(labelTypes);
+    console.log(labelTypes );
     
     return (
         <Table >
