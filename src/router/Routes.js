@@ -5,35 +5,44 @@ import About from '../views/About'
 import Stats from '../views/stats/Stats'
 
 import Header from '../components/rootComponents/Header'
-import { HeroBody, Container } from 'bloomer';
-import { Hero } from 'bloomer';
+import { HeroBody, Container, Title, Hero, Section } from 'bloomer';
 
-
-
-const HeroBodyWrapper = ({ component, ...props }) => <Hero isColor="info" isSize="medium" className="is-bold">
+const HeroBodyWrapper = ({ component, ...props }) => (
+<Hero isColor="info" isSize="medium" className="is-bold">
     <Header />
     <HeroBody {...props}>{component}</HeroBody>
-</Hero>
+</Hero>)
 
-const HeroNavbarWrapper = ({ component, ...props }) => (
+const HeroNavbarWrapper = ({ component, title }) => (
     <React.Fragment>
         <Hero isColor="info" isSize="medium" className="is-bold">
             <Header />
         </Hero>
-        <Container {...props}>{component}</Container>
+        <Hero className="is-info is-bold">
+            <HeroBody>
+                <Container>
+                    <Title>{title}</Title>
+                </Container>
+            </HeroBody>
+        </Hero>
+        <Hero>
+        <Section>
+        {component}
+        </Section>
+        </Hero>
     </React.Fragment>
 )
 
 const WrappedIndex = props => <HeroBodyWrapper component={<Index />} />
-const WrappedAbout = props => <HeroNavbarWrapper component={<About />} />
-const WrappedStats = props => <HeroNavbarWrapper component={<Stats.Index />} />
+const WrappedAbout = props => <HeroNavbarWrapper title={'About'} component={<About />} />
+const WrappedStats = props => <HeroNavbarWrapper title={'Stats'} component={<Stats.Index />} />
 
 export default props => {
     return (
         <React.Fragment>
             <Route path="/" exact component={WrappedIndex} />
-            <Route path="/about/" component={WrappedAbout} />
-            <Route path="/stats/" component={WrappedStats} />
+            <Route path="/about" component={WrappedAbout} />
+            <Route path="/stats" component={WrappedStats} />
         </React.Fragment>
     )
 }

@@ -1,18 +1,15 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";    
+import { Switch, Route, withRouter } from "react-router-dom";    
 import PieCharts from './PieCharts'
+import Summary from "./Summary";
 
-const StatsRoutes = props => (
+const StatsRoutes = ({location}) => (
     <React.Fragment>
-        <Router>
-            <div>
-                <Route path="/stats/piechart" component={PieCharts} />
-            </div>
-        </Router>
+        <Switch location={location}>
+                <Route exact path="/stats/" component={Summary} />
+                <Route exact path="/stats/piechart/" component={PieCharts} />
+        </Switch>
     </React.Fragment>
 )
 
-const Index = props => <h2 className="heading">Index</h2>
-// const PieCharts = props => <h2 className="heading">PieCharts</h2>
-
-export default StatsRoutes
+export default withRouter(StatsRoutes)

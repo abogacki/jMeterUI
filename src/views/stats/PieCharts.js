@@ -1,30 +1,41 @@
 import React from 'react';
 import { Doughnut, } from 'react-chartjs-2';
-import { Box, Button, Title } from 'bloomer'
+import { Box, Title } from 'bloomer'
 import { connect } from 'react-redux';
-import {load as loadBenchmark} from '../../actions/benchmarkDataActions'
 
-const PieCharts = ({ data, loadBenchmark }) => (
+// const desiredDataModel = {
+//     labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+//     datasets: [{
+//         label: '# of Votes',
+//         data: [12, 19, 3, 5, 2, 3],
+//         backgroundColor: [
+//             'red', 'blue', 'yellow', 'green', 'purple', 'orange'
+//         ],
+//         hoverBackgroundColor: ['red', 'blue', 'yellow', 'green', 'purple', 'orange'],
+//         borderWidth: 1
+//     }]
+// }
+
+const convertData = data => {
+    console.log(data);
+    
+}
+
+const PieCharts = ({ data, loadBenchmark }) => {
+    const convertedData = convertData(data);    
+    return (
     <Box>
-        <Button isSize="small" isColor="primary" className="is-rounded" onClick={loadBenchmark} >
-        Load
-        </Button>
         <Title className="heading">
-            PieCharts
+            Response Time Percentiles Over Time (successful responses)
         </Title>
-        <Doughnut data={data} />
+        <Doughnut data={convertedData} />
     </Box>
-)
+)}
 
 
 const mapStateToProps = state => ({
     data: state.benchmarkData.data
 })
 
-const mapDispatchToProps = dispatch => ({
-    loadBenchmark: () => dispatch(loadBenchmark())
-})
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(PieCharts)
+export default connect(mapStateToProps)(PieCharts)
 

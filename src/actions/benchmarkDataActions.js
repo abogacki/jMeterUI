@@ -1,18 +1,9 @@
-export const load = () => dispatch => {
-    console.log('load');
-    
-    dispatch({type: 'LOAD_BENCHMARK', payload: generateData()})
+import {csvTojs} from '../helpers/csvTojs'
+
+export const load = ({data}) => dispatch => {
+    // console.log(data);
+    const converted = csvTojs(data);
+    const payload = { sourceFile: 'test.csv', data: converted}
+    dispatch({type: 'LOAD_BENCHMARK', payload })
 }
 
-const generateData = () => ({
-    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-    datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
-            'red', 'blue', 'yellow', 'green', 'purple', 'orange'
-        ],
-        hoverBackgroundColor: ['red', 'blue', 'yellow', 'green', 'purple', 'orange'],
-        borderWidth: 1
-    }]
-})

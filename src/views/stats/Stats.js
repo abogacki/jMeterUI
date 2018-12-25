@@ -1,36 +1,21 @@
 import React from 'react';
 import StatsRouter from "./StatsRoutes";
-import { Container, Columns, Column, Menu, MenuLabel, MenuList, MenuLink,  } from "bloomer";
+import { Container, Columns, Column, Menu, MenuLabel, MenuList, MenuLink, Title, } from "bloomer";
+import LoaderInput from '../../components/loadInput'
 
 export const Index = props => (
     <Container>
         <Columns>
+            <Column isSize='full' hasTextAlign="centered" >
+                <Title className="has-text-weight-light">
+                    Upload new data
+                </Title>
+                <LoaderInput />
+            </Column>
+        </Columns>
+        <Columns>
             <Column isSize={3}>
-                <Menu>
-                    <MenuLabel>General</MenuLabel>
-                    <MenuList>
-                        <li><MenuLink href="/">Dashboard</MenuLink></li>
-                        <li><MenuLink href="/">Customers</MenuLink></li>
-                    </MenuList>
-                    <MenuLabel>Administration</MenuLabel>
-                    <MenuList>
-                        <li><MenuLink href="/">Team Settings</MenuLink></li>
-                        <li><MenuLink isActive>Manage Your Team</MenuLink></li>
-                        <MenuList>
-                            <li><MenuLink href="/">Members</MenuLink></li>
-                            <li><MenuLink href="/">Plugins</MenuLink></li>
-                            <li><MenuLink href="/">Add a Member</MenuLink></li>
-                        </MenuList>
-                        <li><MenuLink href="/">Invitations</MenuLink></li>
-                        <li><MenuLink href="/">Authentication</MenuLink></li>
-                    </MenuList>
-                    <MenuLabel>Transactions</MenuLabel>
-                    <MenuList>
-                        <li><MenuLink href="/">Payments</MenuLink></li>
-                        <li><MenuLink href="/">Transfers</MenuLink></li>
-                        <li><MenuLink href="/">Balance</MenuLink></li>
-                    </MenuList>
-                </Menu>
+                <StatsMenu />
             </Column>
             <Column isSize={9}>
                 <StatsRouter />
@@ -38,6 +23,19 @@ export const Index = props => (
         </Columns>
     </Container>
 )
+
+const StatsMenu = ({ nodes }) => {
+    return (
+        <Menu>
+            <MenuLabel>Charts</MenuLabel>
+            <MenuList>
+                <li><MenuLink href="#/stats/piechart">Line chart</MenuLink></li>
+                <li><MenuLink href="#/stats/piechart">Bar chart</MenuLink></li>
+            </MenuList>
+            <MenuLabel>Axes</MenuLabel>
+        </Menu>
+    )
+}
 
 export default { Index }
 

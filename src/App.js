@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import './App.scss';
 import Routes from './router/Routes'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { HashRouter as Router } from 'react-router-dom'
 import { Provider } from 'react-redux'
-
 import store from './store/store'
-
 import Footer from './components/rootComponents/Footer'
 
 
