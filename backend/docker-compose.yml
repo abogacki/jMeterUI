@@ -1,0 +1,15 @@
+version: '3.5'
+
+services:
+  jmeterui:
+    container_name: back-end
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/usr/backend/src/app'
+      - '/usr/backend/src/app/node_modules'
+    ports:
+      - '8080:8080'
+    environment:
+      - NODE_ENV=development
