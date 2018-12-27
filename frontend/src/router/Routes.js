@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from "react-router-dom";
 import Index from '../views/Index'
-import About from '../views/About'
+import Tests from '../views/Tests'
 import Stats from '../views/stats/Stats'
 
 import Header from '../components/rootComponents/Header'
@@ -34,14 +34,14 @@ const HeroNavbarWrapper = ({ component, title }) => (
 )
 
 const WrappedIndex = props => <HeroBodyWrapper component={<Index />} />
-const WrappedAbout = props => <HeroNavbarWrapper title={'About'} component={<About />} />
+const WrappedTests = props => <HeroNavbarWrapper title={'Tests'} component={<Tests />} />
 const WrappedStats = props => <HeroNavbarWrapper title={'Stats'} component={<Stats.Index />} />
 
 export default props => {
     return (
         <React.Fragment>
             <Route path="/" exact component={WrappedIndex} />
-            <Route path="/about" component={WrappedAbout} />
+            <Route path="/tests" component={WrappedTests} />
             <Route path="/stats" component={WrappedStats} />
         </React.Fragment>
     )

@@ -36,7 +36,7 @@ const Header = ({appName, ...props}) => (
                             </li>
 
                             <li>
-                                <NavLink activeClassName="is-active" to="/about">About</NavLink>
+                                <NavLink activeClassName="is-active" to="/tests">Tests</NavLink>
                             </li>
                             <li>
                                 <NavLink activeClassName="is-active" to="/stats">Stats</NavLink>

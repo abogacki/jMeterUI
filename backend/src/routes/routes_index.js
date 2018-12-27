@@ -1,8 +1,19 @@
 var keystone = require('keystone');
 
+var importRoutes = keystone.importer(__dirname);
+
+var routes = {
+    api: importRoutes('./api'),
+};
+
+console.log(routes);
+
+
 // Export our app routes
 exports = module.exports = function (app) {
-    app.all('/api*', keystone.middleware.cors)
+    app.all('/api*', keystone.middleware.cors);
+
+    app.get('/api/tests/', keystone.middleware.api, routes.api.test.list);
 
     // Set up the default app route to  http://localhost:3000/index.html
     app.get('/api/', function (req, res) {
