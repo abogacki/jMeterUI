@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "express": "^4.16.1",
-    "nodemon": "^1.18.9"
+    "keystone": "^4.0.0",
+    "nodemon": "^1.18.9",
+    "underscore": "^1.9.1"
   }
 }

@@ -10,8 +10,8 @@ const convertData = data => {
         const successfullRequests = data.filter(r => r.success === "true");
         const errorRequests = data.filter(r => r.success !== "true");
 
-        console.log(successfullRequests.length, errorRequests.length);
-
+        console.log();
+        
         const desiredDataModel = {
             datasets: [{
                 data: [errorRequests.length, successfullRequests.length,],
@@ -34,8 +34,6 @@ const renderTable = data => {
             labelTypes.push(row['label'])
         } 
     } );
-
-    console.log(labelTypes );
     
     return (
         <Table >
@@ -60,9 +58,11 @@ const renderTable = data => {
 }
 
 const Summary = ({ data }) => {
-
     const convertedData = convertData(data);
-
+    
+    if (data && data[0]) console.log(data[0]);
+    if (data && data[0]) console.log(data[1]);
+    
     return (
         <Box>
             <Title className="heading">
