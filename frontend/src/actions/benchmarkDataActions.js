@@ -1,4 +1,4 @@
-import { csvTojs } from '../helpers/csvTojs'
+import { csvToJs } from '../helpers/csvTojs'
 import axios from 'axios'
 
 // action types - refactorable
@@ -6,11 +6,51 @@ const LIST_TESTS_BEGIN = "LIST_TESTS_BEGIN"
 const LIST_TESTS_SUCCESS = "LIST_TESTS_SUCCESS"
 const LIST_TESTS_ERROR = "LIST_TESTS_ERROR"
 
-export const load = ({ data }) => dispatch => {
-    // console.log(data);
-    const converted = csvTojs(data);
-    const payload = { sourceFile: 'test.csv', data: converted }
-    dispatch({ type: 'LOAD_BENCHMARK', payload })
+const convertTypes = object => {
+    return ({
+        IdleTime: Number(object.IdleTime),
+        Latency: Number(object.Latency),
+        allThreads: Number(object.allThreads),
+        bytes: Number(object.bytes),
+        dataType: object.dataType.toString() + " ",
+        elapsed: Number(object.elapsed),
+        failureMessage: object.failureMessage.toString() + " ",
+        label: object.label.toString()+" ",
+        responseCode: Number(object.responseCode),
+        responseMessage: object.responseMessage.toString() + " ",
+        sentBytes: Number(object.sentBytes),
+        success: (object.success === "true"),
+        threadName: object.threadName.toString()+" ",
+        timeStamp: object.timeStamp.toString()+" ",
+    })
+}
+
+export const load = ({ data }) => async dispatch => {
+    const converted = csvToJs(data);
+    const correctTypes = converted.map(o => convertTypes(o));
+
+    console.log(correctTypes[0].failureMessage);
+    
+    const formData = new FormData()
+
+    formData.append('name', 'generic name');
+    formData.append('testData', JSON.stringify(correctTypes));
+
+    try {
+        const url = '/test/create';
+        const baseURL = 'http://localhost:8080/api';
+        const tests = await axios({ 
+            method: 'POST', 
+            data: formData,
+            baseURL, 
+            url });
+
+        
+    } catch (error) {
+        
+    }
+
+    // dispatch({ type: 'LOAD_BENCHMARK', payload })
 }
 
 export const list = () => async dispatch => {
@@ -27,7 +67,7 @@ export const list = () => async dispatch => {
 
     try {
 
-        const url = '/tests'
+        const url = '/test/list'
         const baseURL = 'http://localhost:8080/api'
         const tests = await axios({ method: 'get', baseURL, url })
 
@@ -39,4 +79,18 @@ export const list = () => async dispatch => {
 
     }
 
+}
+
+export const getDetails = testId => async dispatch => {
+    const onSuccess = response => {
+        dispatch({ type: 'LOAD_TESTDETAILS_SUCCESS', payload: response.data.test })
+    }
+    try {
+        const url = `/test/${testId}`
+        const baseURL = 'http://localhost:8080/api'
+        const testDetails = await axios({ method: 'get', baseURL, url });
+        onSuccess(testDetails)
+    } catch (error) {
+        console.log(error);
+    }
 }

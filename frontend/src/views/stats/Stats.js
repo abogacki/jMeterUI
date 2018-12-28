@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import StatsRouter from "./StatsRoutes";
 import { Container, Columns, Column, Menu, MenuLabel, MenuList, MenuLink, Title, } from "bloomer";
-import LoaderInput from '../../components/loadInput'
+import LoaderInput from '../../components/loadInput';
+import { getDetails as getTestDetails } from '../../actions/benchmarkDataActions';
+import { connect } from 'react-redux';
+import {withRouter} from 'react-router-dom'
 
-export const Index = props => (
+const Index = props => (
     <Container>
         <Columns>
             <Column isSize='full' hasTextAlign="centered" >
@@ -37,6 +40,22 @@ const StatsMenu = ({ nodes }) => {
     )
 }
 
-export default { Index }
+const mapDispatchToProps = dispatch => ({
+    getTestDetails: testId => dispatch(getTestDetails(testId))
+})
+
+class StatsIndex extends Component {
+    componentWillMount() {
+        const { testId } = this.props.match.params
+        this.props.getTestDetails(testId)
+    }
+    render() {
+        return (
+            <Index />
+        );
+    }
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(StatsIndex))
 
 

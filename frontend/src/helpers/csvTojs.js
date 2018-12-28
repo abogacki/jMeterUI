@@ -1,4 +1,4 @@
-export function csvTojs(csv) {
+export function csvToJs(csv) {
     var lines = csv.split("\n");
     var result = [];
     var headers = lines[0].split(",");

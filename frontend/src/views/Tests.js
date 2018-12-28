@@ -36,11 +36,11 @@ const TestsContent = ({ children }) => (
 
 
 const TestCard = ({testName, createdAt, ...props}) => {
-    const getDate = () => {
-        const d = new Date(createdAt)
+    const convertDate = (date) => {
+        const d = new Date(date)
         return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`
         };
-
+    const date = convertDate(createdAt)
     return (
     <div className="column is-4">
         <div className="card is-shady">
@@ -50,8 +50,8 @@ const TestCard = ({testName, createdAt, ...props}) => {
             <div className="card-content">
                 <div className="content">
                     <h4>Test name: {testName} </h4>
-                    <p>Creation date: {getDate()}</p>
-                    <p><a href="/">Learn more</a></p>
+                    <p>Creation date: {date}</p>
+                    <p><a href={`/#/stats/${props['_id']}`}>Learn more</a></p>
                 </div>
             </div>
         </div>

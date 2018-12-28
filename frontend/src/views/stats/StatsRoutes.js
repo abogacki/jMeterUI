@@ -6,8 +6,8 @@ import Summary from "./Summary";
 const StatsRoutes = ({location}) => (
     <React.Fragment>
         <Switch location={location}>
-                <Route exact path="/stats/" component={Summary} />
-                <Route exact path="/stats/piechart/" component={PieCharts} />
+                <Route exact path="/stats/:testId" component={Summary} />
+                <Route exact path="/stats/:testId/piechart/" component={PieCharts} />
         </Switch>
     </React.Fragment>
 )

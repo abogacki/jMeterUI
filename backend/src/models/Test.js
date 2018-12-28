@@ -10,34 +10,35 @@ var testCsvStorage = new keystone.Storage({
     adapter: keystone.Storage.Adapters.FS,
     fs: {
         path: keystone.expandPath('/public/testFiles'),
-        // generateFilename: function (file, index) {
-        //     console.log(file);
-        //     console.log(index);
-            
-        //     return file.originalname;
-        // },
         whenExists: 'retry',
         publicPath: '/public/testFiles',
     },
 });
 
 Test.add({
-    testName: {
+    name: {
         type: String,
-        required: true,
+        required: false,
         initial: true,
     },
     createdAt: {
         type: Date,
         default: Date.now
     },
-    data: {
+    file: {
         type: Types.File,
         storage: testCsvStorage,
         mimetype: '.csv',
-        required: true,
+        required: false,
         initial: true
     },
+    testData: {
+        type: Types.Relationship,
+        ref: 'Request',
+        many: true,
+        // required: true,
+        // initial: true
+    }
 });
 
 Test.register();

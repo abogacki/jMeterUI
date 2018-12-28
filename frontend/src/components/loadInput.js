@@ -17,8 +17,6 @@ const handleUpload = async ({loadBenchmark, history }, e) => {
             sourceFile: 'somefile.csv',
             data: e.target.result
         })
-        await history.push('/stats')
-
     } catch (error) {
         reader.onerror = e => alert("Error reading file")
     }

@@ -6,14 +6,12 @@ var routes = {
     api: importRoutes('./api'),
 };
 
-console.log(routes);
-
-
 // Export our app routes
 exports = module.exports = function (app) {
     app.all('/api*', keystone.middleware.cors);
-
-    app.get('/api/tests/', keystone.middleware.api, routes.api.test.list);
+    app.post('/api/test/create', keystone.middleware.api, routes.api.test.create)
+    app.get('/api/test/list', keystone.middleware.api, routes.api.test.list);
+    app.get('/api/test/:testId', keystone.middleware.api, routes.api.test.details);
 
     // Set up the default app route to  http://localhost:3000/index.html
     app.get('/api/', function (req, res) {
