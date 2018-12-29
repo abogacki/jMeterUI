@@ -4,19 +4,21 @@ const Request = keystone.list('Request');
 /**
  * Create a Request data row
  */
-exports.create = function(req, res) {
+exports.create = async (req, res) => {
 	
-    const newRequest = new Request.model();
-    
-	const data = (req.method == 'POST') ? req.body : req.query;
-	
-	newRequest.getUpdateHandler(req).process(data, err => {
-        
-		if (err) return res.apiError('error', err);
+	const requestArray = JSON.parse(req.body.testData);
+
+	try {
+
+		let newRequests = await Request.model.insertMany(requestArray)
 		
-		res.apiResponse({
-			newRequest
-		});
+		res.apiResponse(newRequests);
 		
-	});
-}
+	} catch (error) {
+		console.log(error);
+	}
+
+
+};
+
+

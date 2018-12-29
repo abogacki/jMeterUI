@@ -1,93 +1,78 @@
 var keystone = require('keystone');
 var Types = keystone.Field.Types;
 
-var Request = new keystone.List('Request', {
-    autokey: { path: 'id', from: '_id', unique: true },
-    defaultSort: '-id',
-});
+var Request = new keystone.List('Request');
 
 Request.add({
-    testId: {
-        type: Types.Relationship,
-        ref: 'Test',
-        many: false,
+    IdleTime: {
+        type: Number,
         required: false,
         initial: false
     },
-    // '"Connect"': {
-    //     type: Number,
-    //     required: true,
-    //     initial: true,
-    // },
-    IdleTime: {
-        type: Number,
-        required: true,
-        initial: true
-    },
     Latency: {
         type: Number,
-        required: true,
-        initial: true
+        required: false,
+        initial: false
     },
     allThreads: {
         type: Number,
-        required: true,
-        initial: true
+        required: false,
+        initial: false
     },
     bytes: {
         type: Number,
-        required: true,
-        initial: true
+        required: false,
+        initial: false
     },
     dataType: {
         type: String,
-        required: true,
-        initial: true
+        required: false,
+        initial: false
     },
     elapsed: {
         type: Number,
-        required: true,
-        initial: true
+        required: false,
+        initial: false
     },
     failureMessage: {
         type: String,
-        required: true,
-        initial: true
+        required: false,
+        initial: false
     },
     label: {
         type: String,
-        required: true,
-        initial: true
+        required: false,
+        initial: false
     },
     responseCode: {
         type: Number,
-        required: true,
-        initial: true
+        required: false,
+        initial: false
     },
     responseMessage: {
         type: String,
-        required: true,
-        initial: true
+        required: false,
+        initial: false
     },
     sentBytes: {
         type: Number,
-        required: true,
-        initial: true
+        required: false,
+        initial: false
     },
     success: {
         type: Boolean,
-        required: true,
-        initial: true
+        required: false,
+        initial: false
     },
     threadName: {
         type: String,
-        required: true,
-        initial: true
+        required: false,
+        initial: false
     },
     timeStamp: {
         type: String,
-        required: true,
-        initial: true
+        required: false,
+        initial: false
     },
 });
 

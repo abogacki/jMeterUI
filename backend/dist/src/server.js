@@ -1,11 +1,12 @@
+"use strict";
 
 //import keystone
-var keystone = require('keystone');
+var keystone = require('keystone'); // Set up our keystone instance
 
-// Set up our keystone instance
+
 keystone.init({
   // The name of the KeystoneJS application
-  'name': 'jmeterUi',
+  'name': 'Keystone CMS',
   'port': '8080',
   // Paths to our application static files
   'static': [],
@@ -16,23 +17,19 @@ keystone.init({
   // or run transformation scripts against your database.
   'auto update': true,
   // The url for your MongoDB connection
-  'mongo': 'mongodb://localhost:27017/jmeteruidb',
+  'mongo': 'mongodb://localhost:27017/db',
   // Whether to enable built-in authentication for Keystone's Admin UI,
   'auth': true,
   // The key of the Keystone List for users, required if auth is set to true
   'user model': 'User',
   // The encryption key to use for your cookies.
-  'cookie secret': '6D61822FBEAED8635A4A52241FEC3',
-});
+  'cookie secret': '6D61822FBEAED8635A4A52241FEC3'
+}); // Allow CORS reequests
 
-// Allow CORS reequests
-keystone.set('cors allow origin', true);
+keystone.set('cors allow origin', true); // Load your project's Models
 
-// Load your project's Models
-keystone.import('./models');
+keystone.import('./models'); // Add routes 
 
-// Add routes 
-keystone.set('routes', require('./routes/routes_index'));
+keystone.set('routes', require('./routes/routes_index')); // Start Keystone
 
-// Start Keystone
-keystone.start()
+keystone.start();
