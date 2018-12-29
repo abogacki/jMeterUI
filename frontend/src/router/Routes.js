@@ -1,48 +1,85 @@
 import React from 'react';
 import { Route } from "react-router-dom";
+import posed from 'react-pose';
 import Index from '../views/Index'
 import Tests from '../views/Tests'
+import About from '../views/About'
 import StatsIndex from '../views/stats/Stats'
-
+import {IndexBackground} from "../svg/IndexBackground";
 import Header from '../components/rootComponents/Header'
-import { HeroBody, Container, Title, Hero, Section } from 'bloomer';
+import { HeroBody, Title, Hero, } from 'bloomer';
+
+const PosedDiv = posed.div({
+    enter: {
+        opacity: 1,
+        x: 1
+    },
+    exit: {
+        opacity:0,
+        x: -10
+    }
+})
+
+const Container = posed.div({
+    enter: {
+        opacity: 1,
+        delayChildren: 50,
+        staggerChildren: 200,
+    },
+    exit: {
+        // opacity:0,
+    }
+})
+
+const Div = ({children, ...props}) => (
+    <PosedDiv initialPose="exit" pose="enter" {...props} >
+        {children}
+    </PosedDiv>
+)
 
 const HeroBodyWrapper = ({ component, ...props }) => (
-<Hero isColor="info" isSize="medium" className="is-bold">
-    <Header />
-    <HeroBody {...props}>{component}</HeroBody>
-</Hero>)
+    <Hero 
+    // isColor="info" 
+    isSize="medium" 
+    className="is-info is-fullheight is-bold ">
+            <IndexBackground />
+            <Header />
+            <HeroBody {...props}>{component}</HeroBody>
+    </Hero>)
 
 const HeroNavbarWrapper = ({ component, title }) => (
-    <React.Fragment>
+    <Container pose="enter" initialPose="exit">
         <Hero isColor="info" isSize="medium" className="is-bold">
             <Header />
         </Hero>
         <Hero className="is-info is-bold">
             <HeroBody>
-                <Container>
+                <Div className="container">
                     <Title>{title}</Title>
-                </Container>
+                </Div>
             </HeroBody>
         </Hero>
         <Hero>
-        <Section>
-        {component}
-        </Section>
+            <Div className="section">
+                {component}
+            </Div>
         </Hero>
-    </React.Fragment>
+    </Container>
 )
 
 const WrappedIndex = props => <HeroBodyWrapper component={<Index />} />
 const WrappedTests = props => <HeroNavbarWrapper title={'Tests'} component={<Tests />} />
 const WrappedStats = props => <HeroNavbarWrapper title={'Stats'} component={<StatsIndex />} />
+const WrappedAbout = props => <HeroNavbarWrapper title={'About'} component={<About />} />
 
 export default props => {
     return (
         <React.Fragment>
             <Route path="/" exact component={WrappedIndex} />
             <Route path="/tests" component={WrappedTests} />
+            <Route path="/stats" component={WrappedStats} />
             <Route path="/stats/:testId" component={WrappedStats} />
+            <Route path="/about" component={WrappedAbout} />
         </React.Fragment>
     )
 }

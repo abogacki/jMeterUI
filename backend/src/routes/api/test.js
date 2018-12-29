@@ -25,6 +25,7 @@ exports.details = function (req, res) {
   const id = req.params.testId;
 
   Test.model.findById(id).exec(function (err, test) {
+    
     if (err) return res.apiError('database error', err)
 
     res.apiResponse({
@@ -67,11 +68,9 @@ exports.create = async (req, res) => {
       data: {testData: req.body.testData},
       
     }
-    let response = await axios(options)
-    const testArray = response.data
-    console.log('====================================');
-    console.log(response.data);
-    console.log('====================================');
+    let requestsCreateResponse = await axios(options)
+    const testArray = requestsCreateResponse.data
+
     onSuccess(req.body, testArray)
   } catch (error) {
     console.log(error);
