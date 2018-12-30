@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   backend:
-    container_name: back-end
+    container_name: backend
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -13,9 +13,12 @@ services:
       - '8080:8080'
     environment:
       - NODE_ENV=development
-    # command: npm run dev
+    networks:
+      - jmeteruinetwork
+    depends_on:
+      - mongodb
   frontend:
-    container_name: front-end
+    container_name: frontend
     build:
       context: ./frontend
       dockerfile: Dockerfile
@@ -24,7 +27,24 @@ services:
       - '/usr/src/app/node_modules'
     ports:
       - '3000:3000'
+    links: 
+      - backend
     environment:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
-    # command: npm start
+    networks:
+      - jmeteruinetwork
+  mongodb:
+    image: mongo
+    restart: always
+    container_name: mongodb
+    volumes:
+        - ./mongodata:/data/db
+    ports:
+        - 27017:27017
+    command: mongod --noauth --smallfiles
+    networks:
+        - jmeteruinetwork
+networks: 
+  jmeteruinetwork:
+    driver: bridge
