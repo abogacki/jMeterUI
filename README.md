@@ -3,12 +3,12 @@
 This application is an interface for Apache jMeter results saved in CSV.<br>
 Technologies used:
 
-*docker
-*node.js
-*keystoneJS
-*react
-*redux
-*mongoDB
+*   docker
+*   node.js
+*   keystoneJS
+*   react
+*   redux
+*   mongoDB
 
 ## Available Scripts
 
