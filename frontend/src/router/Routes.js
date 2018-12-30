@@ -41,7 +41,7 @@ const HeroBodyWrapper = ({ component, ...props }) => (
     <Hero 
     // isColor="info" 
     isSize="medium" 
-    className="is-info is-fullheight is-bold ">
+    className="is-info is-bold ">
             <IndexBackground />
             <Header />
             <HeroBody {...props}>{component}</HeroBody>
@@ -77,7 +77,7 @@ export default props => {
         <React.Fragment>
             <Route path="/" exact component={WrappedIndex} />
             <Route path="/tests" component={WrappedTests} />
-            <Route path="/stats" component={WrappedStats} />
+            <Route path="/stats" exact component={WrappedStats} />
             <Route path="/stats/:testId" component={WrappedStats} />
             <Route path="/about" component={WrappedAbout} />
         </React.Fragment>

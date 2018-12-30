@@ -1,6 +1,8 @@
 var keystone = require('keystone');
+var mongoose = require('mongoose');
 var axios = require('axios');
 var Test = keystone.list('Test');
+var Request = keystone.list('Request');
 
 // Creating the API end point
 exports.list = function (req, res) {
@@ -21,17 +23,20 @@ exports.list = function (req, res) {
  * Get test details by testId
  */
 
-exports.details = function (req, res) {
+exports.details = async (req, res) => {
   const id = req.params.testId;
 
-  Test.model.findById(id).exec(function (err, test) {
-    
-    if (err) return res.apiError('database error', err)
+  let test = await Test.model.findById(id).exec()
 
-    res.apiResponse({
-      test
-    })
+  let testData = await Request.model.find({
+    '_id': {
+      $in: test.testData.map(id => mongoose.Types.ObjectId(id))
+    }
   })
+
+  const updatedTest = {...test, testData};
+
+  res.apiResponse(updatedTest)
 }
 
 
@@ -65,8 +70,8 @@ exports.create = async (req, res) => {
       url: '/request/create',
       method: 'post',
       baseURL: 'http://localhost:8080/api',
-      data: {testData: req.body.testData},
-      
+      data: { testData: req.body.testData },
+
     }
     let requestsCreateResponse = await axios(options)
     const testArray = requestsCreateResponse.data
@@ -74,6 +79,6 @@ exports.create = async (req, res) => {
     onSuccess(req.body, testArray)
   } catch (error) {
     console.log(error);
-    
+
   }
 }

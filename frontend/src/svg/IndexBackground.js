@@ -1,5 +1,5 @@
 import React from 'react';
-import posed, { PoseGroup } from "react-pose";
+import posed from "react-pose";
 
 
 const PosedSvg = posed.svg({

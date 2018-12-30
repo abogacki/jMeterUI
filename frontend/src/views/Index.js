@@ -1,11 +1,5 @@
 import React from 'react';
 import LoaderInput from '../components/loadInput';
-// import makeInstance from "axios";
-import makeInstance from 'axios'
-
-const axios = makeInstance.create({ baseURL: 'http://localhost:8080/api' })
-
-const checkApi = () => axios({method: 'get', url: '/'}).then(response => console.log(response))
 
 const Index = props => (
     <React.Fragment>

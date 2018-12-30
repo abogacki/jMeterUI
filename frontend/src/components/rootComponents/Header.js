@@ -19,7 +19,7 @@ const Header = ({appName, ...props}) => (
         <Navbar>
             <Container>
                 <NavbarBrand>
-                    <NavbarItem className="brand-text has-text-weight-light" href="/">
+                    <NavbarItem className="brand-text has-text-weight-light" href="/#/">
                         {appName}
                     </NavbarItem>
                     <NavbarBurger>

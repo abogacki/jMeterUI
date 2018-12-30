@@ -1,24 +1,15 @@
 import React, { Component } from 'react';
 import StatsRouter from "./StatsRoutes";
-import { Container, Columns, Column, Menu, MenuLabel, MenuList, MenuLink, Title, } from "bloomer";
-import LoaderInput from '../../components/loadInput';
+import { Container, Columns, Column, Menu, MenuLabel, MenuList, MenuLink } from "bloomer";
 import { getDetails as getTestDetails } from '../../actions/benchmarkDataActions';
 import { connect } from 'react-redux';
-import {withRouter} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
-const Index = props => (
+const Index = ({...props}) => (
     <Container>
         <Columns>
-            <Column isSize='full' hasTextAlign="centered" >
-                <Title className="has-text-weight-light">
-                    Upload new data
-                </Title>
-                <LoaderInput />
-            </Column>
-        </Columns>
-        <Columns>
             <Column isSize={3}>
-                <StatsMenu />
+                <StatsMenu {...props} />
             </Column>
             <Column isSize={9}>
                 <StatsRouter />
@@ -27,18 +18,23 @@ const Index = props => (
     </Container>
 )
 
-const StatsMenu = ({ nodes }) => {
+const StatsMenu = ({ testId }) => {
     return (
         <Menu>
+            <MenuList>
+                <li><MenuLink href={`#/stats/${testId}/info`}>Test info</MenuLink></li>
+                <li><MenuLink href={`#/stats/${testId}`}>Summary</MenuLink></li>
+            </MenuList>
             <MenuLabel>Charts</MenuLabel>
             <MenuList>
-                <li><MenuLink href="#/stats/piechart">Line chart</MenuLink></li>
-                <li><MenuLink href="#/stats/piechart">Bar chart</MenuLink></li>
+                <li><MenuLink href={`#/stats/${testId}/succesrate`}>Success rate</MenuLink></li>
+                <li><MenuLink href={`#/stats/${testId}/responsetimeoverview`}>Response time overview</MenuLink></li>
             </MenuList>
-            <MenuLabel>Axes</MenuLabel>
         </Menu>
     )
 }
+
+
 
 const mapDispatchToProps = dispatch => ({
     getTestDetails: testId => dispatch(getTestDetails(testId))
@@ -50,8 +46,9 @@ class StatsIndex extends Component {
         this.props.getTestDetails(testId)
     }
     render() {
+        const { testId } = this.props.match.params
         return (
-            <Index />
+            <Index testId={testId} />
         );
     }
 }

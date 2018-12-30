@@ -45,8 +45,10 @@ export const load = ({ data }) => async dispatch => {
             baseURL, 
             url });
 
+        // console.log(tests);
         
     } catch (error) {
+        // console.error(error);
         
     }
 
@@ -83,13 +85,14 @@ export const list = () => async dispatch => {
 
 export const getDetails = testId => async dispatch => {
     const onSuccess = response => {
-        dispatch({ type: 'LOAD_TESTDETAILS_SUCCESS', payload: response.data.test })
+        dispatch({ type: 'LOAD_TESTDETAILS_SUCCESS', payload: response.data})
     }
+    
     try {
         const url = `/test/${testId}`
         const baseURL = 'http://localhost:8080/api'
-        const testDetails = await axios({ method: 'get', baseURL, url });
-        onSuccess(testDetails)
+        const testDetails = await axios({ method: 'get', baseURL, url });        
+        onSuccess(testDetails);
     } catch (error) {
         console.log(error);
     }

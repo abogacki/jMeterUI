@@ -28,30 +28,33 @@ class Tests extends Component {
 
 const TestsContent = ({ children }) => (
     <section className="container">
-        <div className="columns tests">
+        <div className="columns tests is-multiline">
             {children}
         </div>
     </section>
 )
 
 
-const TestCard = ({testName, createdAt, ...props}) => {
+const TestCard = ({name, createdAt, testData, ...props}) => {
     const convertDate = (date) => {
         const d = new Date(date)
         return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`
         };
     const date = convertDate(createdAt)
+    console.log(props);
+    
+
     return (
     <div className="column is-4">
-        <div className="card is-shady">
-            <div className="card-image has-text-centered">
-                <i className="fa fa-paw"></i>
-            </div>
+        <div className="card">
             <div className="card-content">
                 <div className="content">
-                    <h4>Test name: {testName} </h4>
-                    <p>Creation date: {date}</p>
-                    <p><a href={`/#/stats/${props['_id']}`}>Learn more</a></p>
+                    <h4><i className="far fa-chart-bar"></i> Test name: {name} </h4>
+                    <p>
+                    Uploaded at: {date} <br/>
+                    Requests samples count: {testData.length}
+                    </p>
+                    <p><a href={`/#/stats/${props['_id']}`}>Go to test details</a></p>
                 </div>
             </div>
         </div>
