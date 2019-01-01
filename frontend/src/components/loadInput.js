@@ -10,13 +10,16 @@ const mapDispatchToProps = dispatch => ({
 const handleUpload = async ({loadBenchmark, history }, e) => {
     const file = await e.target.files[0];
     const reader = new FileReader();
+    console.log();
+    
     try {
         await reader.readAsText(file, "UTF-8");
         // create object with filename etc
         reader.onload = (e) => loadBenchmark({
-            sourceFile: 'somefile.csv',
+            fileName: file.name,
             data: e.target.result
         })
+
     } catch (error) {
         reader.onerror = e => alert("Error reading file")
     }

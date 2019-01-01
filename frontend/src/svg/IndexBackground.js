@@ -48,7 +48,7 @@ export const IndexBackground = props => (
     <React.Fragment>
     <PosedSvg className="is-hidden-touch liquid-cheese-background" pose="enter" initialPose="exit" xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'>
         <PosedRect pose="enter" initialPose="exit" fill='#3287f5' width='1600' height='800' />
-        <g fill-opacity='1'>
+        <g fillOpacity='1'>
             <PosedPath pose="enter" initialPose="exit" fill='#228cf6' d='M486 705.8c-109.3-21.8-223.4-32.2-335.3-19.4C99.5 692.1 49 703 0 719.8V800h843.8c-115.9-33.2-230.8-68.1-347.6-92.2C492.8 707.1 489.4 706.5 486 705.8z' />
             <PosedPath pose="enter" initialPose="exit" fill='#1294f6' d='M1600 0H0v719.8c49-16.8 99.5-27.8 150.7-33.5c111.9-12.7 226-2.4 335.3 19.4c3.4 0.7 6.8 1.4 10.2 2c116.8 24 231.7 59 347.6 92.2H1600V0z' />
             <PosedPath pose="enter" initialPose="exit" fill='#079cf2' d='M478.4 581c3.2 0.8 6.4 1.7 9.5 2.5c196.2 52.5 388.7 133.5 593.5 176.6c174.2 36.6 349.5 29.2 518.6-10.2V0H0v574.9c52.3-17.6 106.5-27.7 161.1-30.9C268.4 537.4 375.7 554.2 478.4 581z' />

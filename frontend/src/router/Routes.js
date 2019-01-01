@@ -5,9 +5,10 @@ import Index from '../views/Index'
 import Tests from '../views/Tests'
 import About from '../views/About'
 import StatsIndex from '../views/stats/Stats'
-import {IndexBackground} from "../svg/IndexBackground";
+import { IndexBackground } from "../svg/IndexBackground";
 import Header from '../components/rootComponents/Header'
 import { HeroBody, Title, Hero, } from 'bloomer';
+import { withRouter, Redirect } from "react-router-dom";
 
 const PosedDiv = posed.div({
     enter: {
@@ -15,7 +16,7 @@ const PosedDiv = posed.div({
         x: 1
     },
     exit: {
-        opacity:0,
+        opacity: 0,
         x: -10
     }
 })
@@ -31,20 +32,20 @@ const Container = posed.div({
     }
 })
 
-const Div = ({children, ...props}) => (
+const Div = ({ children, ...props }) => (
     <PosedDiv initialPose="exit" pose="enter" {...props} >
         {children}
     </PosedDiv>
 )
 
 const HeroBodyWrapper = ({ component, ...props }) => (
-    <Hero 
-    // isColor="info" 
-    isSize="medium" 
-    className="is-info is-bold ">
-            <IndexBackground />
-            <Header />
-            <HeroBody {...props}>{component}</HeroBody>
+    <Hero
+        // isColor="info" 
+        isSize="medium"
+        className="is-info is-bold ">
+        <IndexBackground />
+        <Header />
+        <HeroBody {...props}>{component}</HeroBody>
     </Hero>)
 
 const HeroNavbarWrapper = ({ component, title }) => (
@@ -72,14 +73,21 @@ const WrappedTests = props => <HeroNavbarWrapper title={'Tests'} component={<Tes
 const WrappedStats = props => <HeroNavbarWrapper title={'Stats'} component={<StatsIndex />} />
 const WrappedAbout = props => <HeroNavbarWrapper title={'About'} component={<About />} />
 
-export default props => {
+const Routes = ({ match }) => {
+    const { testId } = match.params;
+    console.log(match);
+
     return (
         <React.Fragment>
             <Route path="/" exact component={WrappedIndex} />
             <Route path="/tests" component={WrappedTests} />
-            <Route path="/stats" exact component={WrappedStats} />
+            {/* <Route path="/stats" exact component={WrappedStats} /> */}
+            <Route exact path="/stats" render={() => <Redirect to="/tests" />} />
             <Route path="/stats/:testId" component={WrappedStats} />
             <Route path="/about" component={WrappedAbout} />
         </React.Fragment>
     )
 }
+
+
+export default withRouter(Routes)

@@ -41,9 +41,6 @@ const TestCard = ({name, createdAt, testData, ...props}) => {
         return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`
         };
     const date = convertDate(createdAt)
-    console.log(props);
-    
-
     return (
     <div className="column is-4">
         <div className="card">

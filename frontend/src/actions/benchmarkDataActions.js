@@ -1,5 +1,5 @@
 import { csvToJs } from '../helpers/csvTojs'
-import axios from 'axios'
+import axios from 'axios' 
 
 // action types - refactorable
 const LIST_TESTS_BEGIN = "LIST_TESTS_BEGIN"
@@ -25,15 +25,12 @@ const convertTypes = object => {
     })
 }
 
-export const load = ({ data }) => async dispatch => {
+export const load = ({ data, fileName }) => async dispatch => {
     const converted = csvToJs(data);
-    const correctTypes = converted.map(o => convertTypes(o));
-
-    console.log(correctTypes[0].failureMessage);
-    
+    const correctTypes = converted.map(o => convertTypes(o));    
     const formData = new FormData()
 
-    formData.append('name', 'generic name');
+    formData.append('name', fileName);
     formData.append('testData', JSON.stringify(correctTypes));
 
     try {
@@ -45,8 +42,8 @@ export const load = ({ data }) => async dispatch => {
             baseURL, 
             url });
 
-        // console.log(tests);
-        
+        const testId = tests.data.post._id;
+                
     } catch (error) {
         // console.error(error);
         
