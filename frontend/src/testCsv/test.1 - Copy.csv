@@ -1,3 +1,0 @@
-timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,Latency,IdleTime,Connect
-1545482676687,4283,Students,200,OK,Students 1-1,text,true,,55447,138,3,12,3965,0,775
-1545482679949,1937,Students,200,OK,Students 1-2,text,true,,55447,138,3,12,1620,0,698

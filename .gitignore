@@ -27,3 +27,5 @@ src/**/*.css
 
 *.vscode
 .vscode
+
+mongodata
