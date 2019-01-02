@@ -25,7 +25,7 @@ const convertTypes = object => {
     })
 }
 
-export const load = ({ data, fileName }) => async dispatch => {
+export const load = ({ data, fileName }, history) => async dispatch => {
     const converted = csvToJs(data);
     const correctTypes = converted.map(o => convertTypes(o));    
     const formData = new FormData()
@@ -43,7 +43,8 @@ export const load = ({ data, fileName }) => async dispatch => {
             url });
 
         const testId = tests.data.post._id;
-                
+        history.push(`/stats/${testId}`)
+
     } catch (error) {
         // console.error(error);
         
