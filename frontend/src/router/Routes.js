@@ -4,6 +4,7 @@ import posed from 'react-pose';
 import Index from '../views/Index'
 import Tests from '../views/Tests'
 import About from '../views/About'
+import Compare from '../views/Compare'
 import StatsIndex from '../views/stats/Stats'
 import { IndexBackground } from "../svg/IndexBackground";
 import Header from '../components/rootComponents/Header'
@@ -72,11 +73,11 @@ const WrappedIndex = props => <HeroBodyWrapper component={<Index />} />
 const WrappedTests = props => <HeroNavbarWrapper title={'Tests'} component={<Tests />} />
 const WrappedStats = props => <HeroNavbarWrapper title={'Stats'} component={<StatsIndex />} />
 const WrappedAbout = props => <HeroNavbarWrapper title={'About'} component={<About />} />
+const WrappedCompare = props => <HeroNavbarWrapper title={'Comparison'} component={<Compare />} />
 
 const Routes = ({ match }) => {
     const { testId } = match.params;
     console.log(match);
-
     return (
         <React.Fragment>
             <Route path="/" exact component={WrappedIndex} />
@@ -85,6 +86,7 @@ const Routes = ({ match }) => {
             <Route exact path="/stats" render={() => <Redirect to="/tests" />} />
             <Route path="/stats/:testId" component={WrappedStats} />
             <Route path="/about" component={WrappedAbout} />
+            <Route path="/compare" component={WrappedCompare} />
         </React.Fragment>
     )
 }

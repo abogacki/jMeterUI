@@ -34,9 +34,40 @@ exports.details = async (req, res) => {
     }
   })
 
-  const updatedTest = {...test, testData};
+  const updatedTest = { ...test, testData };
 
   res.apiResponse(updatedTest)
+}
+
+exports.getDetailsMany = async (req, res) => {
+  try {
+    const ids = JSON.parse(req.query.testIds)
+
+    let tests = await Test.model.find({
+      '_id': { $in: ids.map(id => mongoose.Types.ObjectId(id)) }
+    });
+
+    let updatedTests = await Promise.all(
+      tests.map(async test => {
+
+        const testData = await Request.model.find({
+          '_id': {
+            $in: test.testData.map(id => mongoose.Types.ObjectId(id))
+          }
+        })
+        return { ...test, testData }
+      }))
+
+
+    console.log(updatedTests);
+
+
+    res.apiResponse(updatedTests)
+
+  } catch (error) {
+    console.log(error);
+
+  }
 }
 
 
@@ -78,7 +109,7 @@ exports.create = async (req, res) => {
 
     onSuccess(req.body, testArray)
   } catch (error) {
-    console.log(error);
+    apiError(error)
 
   }
 }

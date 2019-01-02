@@ -22,13 +22,14 @@ const StatsMenu = ({ testId }) => {
     return (
         <Menu>
             <MenuList>
-                <li><MenuLink href={`#/stats/${testId}/info`}>Test info</MenuLink></li>
                 <li><MenuLink href={`#/stats/${testId}`}>Summary</MenuLink></li>
+                <li><MenuLink href={`#/stats/${testId}/stats`}>Statistics</MenuLink></li>
             </MenuList>
             <MenuLabel>Charts</MenuLabel>
             <MenuList>
                 <li><MenuLink href={`#/stats/${testId}/succesrate`}>Success rate</MenuLink></li>
                 <li><MenuLink href={`#/stats/${testId}/responsetimeoverview`}>Response time overview</MenuLink></li>
+                <li><MenuLink href={`#/stats/${testId}/activethreadsovertime`}>Active threads over time</MenuLink></li>
             </MenuList>
         </Menu>
     )

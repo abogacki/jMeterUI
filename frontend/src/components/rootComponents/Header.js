@@ -42,6 +42,9 @@ const Header = ({appName, ...props}) => (
                                 <NavLink activeClassName="is-active" to="/stats">Stats</NavLink>
                             </li>
                             <li>
+                                <NavLink activeClassName="is-active" to="/compare">Compare</NavLink>
+                            </li>
+                            <li>
                                 <NavLink activeClassName="is-active" to="/about">About</NavLink>
                             </li>
                         </Tabs>

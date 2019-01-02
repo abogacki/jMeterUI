@@ -11,6 +11,7 @@ exports = module.exports = function (app) {
     app.all('/api*', keystone.middleware.cors);
     app.post('/api/test/create', keystone.middleware.api, routes.api.test.create)
     app.get('/api/test/list', keystone.middleware.api, routes.api.test.list);
+    app.get('/api/test/detailList', keystone.middleware.api, routes.api.test.getDetailsMany);
     app.get('/api/test/:testId', keystone.middleware.api, routes.api.test.details);
     app.post('/api/request/create', keystone.middleware.api, routes.api.request.create)
 

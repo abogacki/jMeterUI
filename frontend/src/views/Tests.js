@@ -46,9 +46,9 @@ const TestCard = ({name, createdAt, testData, ...props}) => {
         <div className="card">
             <div className="card-content">
                 <div className="content">
-                    <h4><i className="far fa-chart-bar"></i> Test name: {name} </h4>
+                    <h4><i className="far fa-chart-bar"></i> Test name: <u>{name} </u> </h4>
                     <p>
-                    Uploaded at: {date} <br/>
+                    <strong>Uploaded at:</strong> {date} <br/>
                     Requests samples count: {testData.length}
                     </p>
                     <p><a href={`/#/stats/${props['_id']}`}>Go to test details</a></p>

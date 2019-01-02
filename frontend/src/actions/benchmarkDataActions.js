@@ -87,6 +87,7 @@ export const getDetails = testId => async dispatch => {
     }
     
     try {
+        dispatch({ type: 'LOAD_TESTDETAILS_BEGIN'})
         const url = `/test/${testId}`
         const baseURL = 'http://localhost:8080/api'
         const testDetails = await axios({ method: 'get', baseURL, url });        
