@@ -1,6 +1,6 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-import { Box, Title, Columns, Column } from 'bloomer'
+import { Title, Columns, Column, Panel, PanelBlock, PanelHeading } from 'bloomer'
 import { connect } from 'react-redux';
 
 const convertData = data => {
@@ -32,7 +32,7 @@ const convertData = data => {
 const ResponseTimeOvewrview = ({ loadBenchmark, testData, ...props }) => {
     const convertedData = convertData(testData);
     return (
-        <Box>
+        <div>
             <Columns isMultiline>
                 <Column isSize="full">
                     <Title className="heading">
@@ -40,14 +40,22 @@ const ResponseTimeOvewrview = ({ loadBenchmark, testData, ...props }) => {
                     </Title>
                 </Column>
                 <Column>
-                    {convertedData && <Bar
-                        options={{ legend: { display: false } }}
-                        data={
-                            convertedData
-                        } />}
+                    <Panel>
+                        <PanelHeading>
+                            Response time overview
+                        </PanelHeading>
+                        <PanelBlock className="notification is-white">
+
+                            {convertedData && <Bar
+                                options={{ legend: { display: false } }}
+                                data={
+                                    convertedData
+                                } />}
+                        </PanelBlock>
+                    </Panel>
                 </Column>
             </Columns>
-        </Box>
+        </div>
     )
 }
 

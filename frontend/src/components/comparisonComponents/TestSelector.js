@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { select as selectTest, load as loadComparison } from '../../actions/compareActions'
-import { Columns, Button } from 'bloomer';
+import { Columns, Button, Title } from 'bloomer';
+import { Column } from 'bloomer/lib/grid/Column';
+import {withRouter} from 'react-router-dom';
 
 const mapStateToProps = state => ({
     testsList: state.tests.list,
@@ -12,11 +14,13 @@ const mapDispatchToProps = dispatch => ({
     loadComparison: () => dispatch(loadComparison())
 });
 
-const ChooseTests = ({ testsList, selectTest, loadComparison }) => {
-    console.log(testsList);
+
+const ChooseTests = ({ testsList, selectTest, loadComparison, history }) => {
     return (
         <Columns isMultiline>
-            <Button onClick={loadComparison}>Load</Button>
+            <Column>
+                <Button onClick={async e =>{ await loadComparison().then(() => history.push('/comparison'));  }}>Load</Button>
+            </Column>
             {testsList &&
                 testsList.length > 0 &&
                 testsList.map((test, index) =>
@@ -29,10 +33,9 @@ const ChooseTests = ({ testsList, selectTest, loadComparison }) => {
     )
 }
 
-const TestSelector = connect(mapStateToProps, mapDispatchToProps)(ChooseTests)
+const TestSelector = withRouter(connect(mapStateToProps, mapDispatchToProps)(ChooseTests));
 
 export default TestSelector
-
 
 const TestCard = ({ name, createdAt, testData, onClick, isSelected, ...props }) => {
     const convertDate = (date) => {
@@ -42,15 +45,17 @@ const TestCard = ({ name, createdAt, testData, onClick, isSelected, ...props }) 
     const date = convertDate(createdAt)
     return (
         <div className="column is-4">
-            <div className={"notification " + (isSelected && 'is-info')}>
-
+            <div className={"box notification " + (isSelected && 'is-info')}>
                 <div className="content">
-                    <h4><i className="far fa-chart-bar"></i> Test name: <u>{name} </u> </h4>
+                    <div class="heading">
+                    <i className="far fa-chart-bar"></i> Test name:
+                    </div>
+                    <Title> <u>{name} </u></Title>
                     <p>
                         <strong>Uploaded at:</strong> {date} <br />
                         Requests samples count: {testData.length}
                     </p>
-                    <p><button type="button" className="button " onClick={onClick.bind(null, props['_id'])}>{isSelected ? 'Diselect' : 'Select'}</button></p>
+                    <p><button type="button" className="button " onClick={onClick.bind(null, props['_id'])}>{isSelected ? 'Deselect' : 'Select'}</button></p>
                 </div>
 
             </div>

@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Box, Title, Table, Columns, Column } from 'bloomer';
+import { Title, Table, Columns, Column, Icon } from 'bloomer';
 
 const StatisticalData = ({ groupedData, groupedStats }) => {
     // const calculatedStats = transformedGroups ? Object.keys(transformedGroups).map(groupName => calcStats(groupName, transformedGroups[groupName])) : null
     return (
-        <Box>
+        <div>
             <Title className="heading">
-                Basic stats
-        </Title>
+                <i className="fas fa-percentage" /> Basic stats
+            </Title>
             <Columns>
                 <Column style={{ overflowX: 'auto' }}>
                     <Table isBordered className="is-hoverable">
@@ -30,7 +30,7 @@ const StatisticalData = ({ groupedData, groupedStats }) => {
                     </Table>
                 </Column>
             </Columns>
-        </Box>
+        </div>
     )
 };
 
@@ -41,7 +41,7 @@ const Row = ({ data }) => {
             <td>{printStringOrArray(data.sum)}</td>
             <td>{printStringOrArray(data.mean)}</td>
             <td>{printStringOrArray(data.median)}</td>
-            <td>{data.mode.length > 3 ? 'N/A' : printStringOrArray(data.mode)}</td>
+            <td>{printStringOrArray(data.mode)}</td>
             <td>{printStringOrArray(data.variance)}</td>
             <td>{printStringOrArray(data.standardDeviation)}</td>
             <td>{printStringOrArray(data.percentile)}</td>
@@ -50,6 +50,9 @@ const Row = ({ data }) => {
 }
 
 const printStringOrArray = data => {
+    console.log(typeof(data));
+    console.log(data);
+    
     if (typeof(data) == "object") {
         return data.join(', ')
     } else {

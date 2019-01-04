@@ -3,9 +3,12 @@ const initialState = {
 }
 
 const compareReducer = (state= initialState, action) => {
-    switch (action.payload) {
-        case "LOAD_COMPARISON_SUCCESS":
-            return {...state};    
+    switch (action.type) {
+        case "COMPARE_LOAD_SUCCESS":
+            console.log(action.payload, 'success');
+            return {...state, tests: action.payload};
+        case "COMPARE_RESET":
+            return {...state, tests: []}    
         default:
             return {...state};
     }

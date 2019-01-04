@@ -5,6 +5,7 @@ import Index from '../views/Index'
 import Tests from '../views/Tests'
 import About from '../views/About'
 import Compare from '../views/Compare'
+import Comparison from '../views/Comparison'
 import StatsIndex from '../views/stats/Stats'
 import { IndexBackground } from "../svg/IndexBackground";
 import Header from '../components/rootComponents/Header'
@@ -74,6 +75,7 @@ const WrappedTests = props => <HeroNavbarWrapper title={'Tests'} component={<Tes
 const WrappedStats = props => <HeroNavbarWrapper title={'Stats'} component={<StatsIndex />} />
 const WrappedAbout = props => <HeroNavbarWrapper title={'About'} component={<About />} />
 const WrappedCompare = props => <HeroNavbarWrapper title={'Comparison'} component={<Compare />} />
+const WrappedComparison = props => <HeroNavbarWrapper title={'Comparison'} component={<Comparison />} />
 
 const Routes = ({ match }) => {
     const { testId } = match.params;
@@ -82,11 +84,11 @@ const Routes = ({ match }) => {
         <React.Fragment>
             <Route path="/" exact component={WrappedIndex} />
             <Route path="/tests" component={WrappedTests} />
-            {/* <Route path="/stats" exact component={WrappedStats} /> */}
             <Route exact path="/stats" render={() => <Redirect to="/tests" />} />
             <Route path="/stats/:testId" component={WrappedStats} />
             <Route path="/about" component={WrappedAbout} />
-            <Route path="/compare" component={WrappedCompare} />
+            <Route path="/compare" exact component={WrappedCompare} />
+            <Route path="/comparison" exact component={WrappedComparison} />
         </React.Fragment>
     )
 }

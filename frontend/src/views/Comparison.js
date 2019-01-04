@@ -1,12 +1,12 @@
 import React from 'react';
-import TestSelector from '../components/comparisonComponents/TestSelector'
+import ComparedTests from '../components/comparisonComponents/ComparedTests'
 
 const Compare = props => {
     return (
         <div className="container">
             <div className="tab-pane is-active" id="pane-2">
                 <div className="content">
-                    <TestSelector />
+                    <ComparedTests />
                 </div>
             </div>
         </div>

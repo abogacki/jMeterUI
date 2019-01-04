@@ -1,6 +1,6 @@
 import React from 'react';
 import { Doughnut, } from 'react-chartjs-2';
-import { Box, Title, Columns, Column } from 'bloomer'
+import { Title, Columns, Column, Panel, PanelHeading, PanelBlock } from 'bloomer'
 import { connect } from 'react-redux';
 
 const convertData = data => {
@@ -15,6 +15,11 @@ const convertData = data => {
 
             // These labels appear in the legend and in the tooltips when hovering different arcs
             labels: ['Error', 'Success'],
+            options: {
+                legend: {
+                    position: 'right'
+                }
+            }
         };
         return desiredDataModel
     }
@@ -23,7 +28,6 @@ const convertData = data => {
 const PieCharts = ({ data, loadBenchmark }) => {
     const convertedData = convertData(data);
     return (
-        <Box>
             <Columns isMultiline>
                 <Column isSize="full">
                     <Title className="heading">
@@ -31,10 +35,16 @@ const PieCharts = ({ data, loadBenchmark }) => {
                     </Title>
                 </Column>
                 <Column>
-                    {data && <Doughnut data={convertedData} />}
+                    <Panel>
+                        <PanelHeading>
+                            Realized with Chart.js
+                        </PanelHeading>
+                        <PanelBlock className="notification is-white">
+                            {data && <Doughnut data={convertedData} />}
+                        </PanelBlock>
+                    </Panel>
                 </Column>
             </Columns>
-        </Box>
     )
 }
 

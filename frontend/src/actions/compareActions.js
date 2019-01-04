@@ -12,9 +12,10 @@ export const load = () => async (dispatch, getState) => {
     const testIds = selectedTests.map(test => test._id);
 
     const onSuccess = response => {
-        console.log('response.data', response.data);
+        dispatch({type: 'COMPARE_LOAD_SUCCESS', payload: response.data});
+        console.log("success, COMPARE_LOAD_SUCCESS", response.data);
+        
     }
-
     try {
         dispatch({ type: 'COMPARE_LOAD_BEGIN'});
     

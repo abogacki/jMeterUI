@@ -65,7 +65,7 @@ const calcStats = (groupedData) => {
         sum: Math.round(statsLite.sum(transformedGroups[groupName]) * 100) / 100,
         mean: Math.round(statsLite.mean(transformedGroups[groupName]) * 100) / 100,
         median: Math.round(statsLite.median(transformedGroups[groupName]) * 100) / 100,
-        mode: Math.round(statsLite.mode(transformedGroups[groupName]) * 100) / 100,
+        mode: statsLite.mode(transformedGroups[groupName]),
         variance: Math.round(statsLite.variance(transformedGroups[groupName]) * 100) / 100,
         standardDeviation: Math.round(statsLite.stdev(transformedGroups[groupName]) * 100) / 100,
         sampleStandardDeviation: Math.round(statsLite.sampleStdev(transformedGroups[groupName]) * 100) / 100,

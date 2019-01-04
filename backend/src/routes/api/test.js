@@ -58,10 +58,6 @@ exports.getDetailsMany = async (req, res) => {
         return { ...test, testData }
       }))
 
-
-    console.log(updatedTests);
-
-
     res.apiResponse(updatedTests)
 
   } catch (error) {

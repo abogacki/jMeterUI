@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { list as getTestList } from '../actions/benchmarkDataActions';
+import { Title, Level, LevelItem } from 'bloomer';
 
 const mapDispatchToProps = dispatch => ({
     getTestList: () => dispatch(getTestList())
@@ -18,7 +19,7 @@ class Tests extends Component {
     render() {
         return (
             <TestsContent>
-                {this.props.testsLists && this.props.testsLists.length > 0 && this.props.testsLists.map((test, index) => <TestCard key={index} {...test} />) }
+                {this.props.testsLists && this.props.testsLists.length > 0 && this.props.testsLists.map((test, index) => <TestCard key={index} {...test} />)}
             </TestsContent>
         )
     }
@@ -35,27 +36,47 @@ const TestsContent = ({ children }) => (
 )
 
 
-const TestCard = ({name, createdAt, testData, ...props}) => {
+const TestCard = ({ name, createdAt, testData, ...props }) => {
     const convertDate = (date) => {
         const d = new Date(date)
-        return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`
-        };
+        return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`
+    };
     const date = convertDate(createdAt)
     return (
-    <div className="column is-4">
-        <div className="card">
-            <div className="card-content">
-                <div className="content">
-                    <h4><i className="far fa-chart-bar"></i> Test name: <u>{name} </u> </h4>
-                    <p>
-                    <strong>Uploaded at:</strong> {date} <br/>
-                    Requests samples count: {testData.length}
-                    </p>
-                    <p><a href={`/#/stats/${props['_id']}`}>Go to test details</a></p>
+        <div className="column is-4">
+            <div className="card">
+                <div className="card-content">
+                    <div className="content">
+                        <div class="heading">
+                            <i className="far fa-chart-bar"></i> Test name:
+                        </div>
+                        <Title>{name} </Title>
+                        <hr />
+
+                        <Level>
+                            <LevelItem>
+                                <div>
+
+                                    <div className="heading">Uploaded at:</div>
+                                    {date}
+                                </div>
+                            </LevelItem>
+                            <LevelItem>
+                                <div>
+
+                                    <div className="heading">
+                                        Requests samples count:
+                                </div>
+                                    {testData.length}
+                                </div>
+                            </LevelItem>
+                        </Level>
+                        <p><a href={`/#/stats/${props['_id']}`}>Go to test details</a></p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-)}
+    )
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tests)
