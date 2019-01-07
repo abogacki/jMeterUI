@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { list as getTestList } from '../actions/benchmarkDataActions';
-import { Title, Level, LevelItem } from 'bloomer';
+import { Title, Level, LevelItem, Box, Button } from 'bloomer';
 
 const mapDispatchToProps = dispatch => ({
     getTestList: () => dispatch(getTestList())
@@ -44,7 +44,7 @@ const TestCard = ({ name, createdAt, testData, ...props }) => {
     const date = convertDate(createdAt)
     return (
         <div className="column is-4">
-            <div className="card">
+            <Box className="notification is-white">
                 <div className="card-content">
                     <div className="content">
                         <div class="heading">
@@ -52,7 +52,6 @@ const TestCard = ({ name, createdAt, testData, ...props }) => {
                         </div>
                         <Title>{name} </Title>
                         <hr />
-
                         <Level>
                             <LevelItem>
                                 <div>
@@ -71,10 +70,10 @@ const TestCard = ({ name, createdAt, testData, ...props }) => {
                                 </div>
                             </LevelItem>
                         </Level>
-                        <p><a href={`/#/stats/${props['_id']}`}>Go to test details</a></p>
+                        <Button className="is-rounded is-info" href={`/#/stats/${props['_id']}`}>Details</Button>
                     </div>
                 </div>
-            </div>
+            </Box>
         </div>
     )
 }

@@ -80,7 +80,6 @@ const Info = ({ testData, ...props }) => {
                     <Box className="notification is-warning">
                         <Level>
                             <LevelLeft>
-
                                 <LevelItem>
                                     <div>
                                         <div className="heading">Requests samples count: </div>
@@ -95,7 +94,6 @@ const Info = ({ testData, ...props }) => {
 
                         <Level>
                             <LevelLeft>
-
                                 <LevelItem>
                                     <div>
                                         <div className="heading">Threads: </div>
@@ -116,18 +114,21 @@ const Info = ({ testData, ...props }) => {
                             <i className="fas fa-clock" /> ~{`${elapsed} sec`}
                         </Title>
                         <Level>
-                            <LevelItem>
-                                <div>
-                                    <div className="heading">started: </div>
-                                    <Title isSize={5}>{`${beginDate.getHours()}:${beginDate.getMinutes()}:${beginDate.getSeconds()}`}</Title>
-                                </div>
-                            </LevelItem>
-                            <LevelItem>
-                                <div>
-                                    <div className="heading">finished: </div>
-                                    <Title isSize={5}>{`${endDate.getHours()}:${endDate.getMinutes()}:${endDate.getSeconds()}`}</Title>
-                                </div>
-                            </LevelItem>
+                            <LevelLeft>
+
+                                <LevelItem>
+                                    <div>
+                                        <div className="heading">started: </div>
+                                        <Title isSize={5}>{`${beginDate.getHours()}:${beginDate.getMinutes()}:${beginDate.getSeconds()}`}</Title>
+                                    </div>
+                                </LevelItem>
+                                <LevelItem>
+                                    <div>
+                                        <div className="heading">finished: </div>
+                                        <Title isSize={5}>{`${endDate.getHours()}:${endDate.getMinutes()}:${endDate.getSeconds()}`}</Title>
+                                    </div>
+                                </LevelItem>
+                            </LevelLeft>
                         </Level>
                     </Box>
                 </Column>

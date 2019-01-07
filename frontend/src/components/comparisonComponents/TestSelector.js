@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { select as selectTest, load as loadComparison } from '../../actions/compareActions'
 import { Columns, Button, Title } from 'bloomer';
 import { Column } from 'bloomer/lib/grid/Column';
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 const mapStateToProps = state => ({
     testsList: state.tests.list,
@@ -17,9 +17,14 @@ const mapDispatchToProps = dispatch => ({
 
 const ChooseTests = ({ testsList, selectTest, loadComparison, history }) => {
     return (
-        <Columns isMultiline>
-            <Column>
-                <Button onClick={async e =>{ await loadComparison().then(() => history.push('/comparison'));  }}>Load</Button>
+        <Columns isCentered isMultiline>
+            <Column isSize={"full"} className="has-text-centered">
+                <Button
+                    className="is-primary is-rounded"
+                    disabled={testsList.filter(t => t.isSelected).length < 2}
+                    onClick={async e => { await loadComparison().then(() => history.push('/comparison')); }}>
+                    Load
+                </Button>
             </Column>
             {testsList &&
                 testsList.length > 0 &&
@@ -48,14 +53,20 @@ const TestCard = ({ name, createdAt, testData, onClick, isSelected, ...props }) 
             <div className={"box notification " + (isSelected && 'is-info')}>
                 <div className="content">
                     <div class="heading">
-                    <i className="far fa-chart-bar"></i> Test name:
+                        <i className="far fa-chart-bar"></i> Test name:
                     </div>
                     <Title> <u>{name} </u></Title>
                     <p>
                         <strong>Uploaded at:</strong> {date} <br />
                         Requests samples count: {testData.length}
                     </p>
-                    <p><button type="button" className="button " onClick={onClick.bind(null, props['_id'])}>{isSelected ? 'Deselect' : 'Select'}</button></p>
+                    <p><Button
+                        className="is-rounded is-link"
+                        onClick={onClick.bind(null, props['_id'])}
+                    >
+                        {isSelected ? 'Deselect' : 'Select'}
+                    </Button>
+                    </p>
                 </div>
 
             </div>

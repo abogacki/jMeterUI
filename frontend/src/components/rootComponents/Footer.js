@@ -41,14 +41,14 @@ const Footer = props => (
             </div>
             <div className="content has-text-centered">
                 <p>
-                    <a className="icon" href="https://github.com/dansup/bulma-templates">
+                    <a className="icon" href="https://github.com/abogacki/jmeterui">
                         <i className="fa fa-github"></i>
                     </a>
                 </p>
                 <div className="control level-item">
                     <a href="https://github.com/dansup/bulma-templates">
                         <div className="tags has-addons">
-                            <span className="tag is-dark">Bulma Templates</span>
+                            <span className="tag is-dark">jMeter UI</span>
                             <span className="tag is-info">MIT license</span>
                         </div>
                     </a>
