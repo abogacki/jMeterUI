@@ -47,7 +47,7 @@ const TestCard = ({ name, createdAt, testData, ...props }) => {
             <Box className="notification is-white">
                 <div className="card-content">
                     <div className="content">
-                        <div class="heading">
+                        <div className="heading">
                             <i className="far fa-chart-bar"></i> Test name:
                         </div>
                         <Title>{name} </Title>
@@ -55,7 +55,6 @@ const TestCard = ({ name, createdAt, testData, ...props }) => {
                         <Level>
                             <LevelItem>
                                 <div>
-
                                     <div className="heading">Uploaded at:</div>
                                     {date}
                                 </div>

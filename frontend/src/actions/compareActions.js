@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const select = id => async (dispatch, getState) => {
-    console.log(id);
+    // console.log(id);
     dispatch({type: 'COMPARE_SELECT', payload: id})
 } 
 
@@ -13,7 +13,7 @@ export const load = () => async (dispatch, getState) => {
 
     const onSuccess = response => {
         dispatch({type: 'COMPARE_LOAD_SUCCESS', payload: response.data});
-        console.log("success, COMPARE_LOAD_SUCCESS", response.data);
+        // console.log("success, COMPARE_LOAD_SUCCESS", response.data);
         
     }
     try {
@@ -31,7 +31,7 @@ export const load = () => async (dispatch, getState) => {
     
     } catch (error) {
      
-        console.log(error);
+        // console.log(error);
         alert(error.message)
     
     }

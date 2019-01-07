@@ -52,7 +52,7 @@ const TestCard = ({ name, createdAt, testData, onClick, isSelected, ...props }) 
         <div className="column is-4">
             <div className={"box notification " + (isSelected && 'is-info')}>
                 <div className="content">
-                    <div class="heading">
+                    <div className="heading">
                         <i className="far fa-chart-bar"></i> Test name:
                     </div>
                     <Title> <u>{name} </u></Title>

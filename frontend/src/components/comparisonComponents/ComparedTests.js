@@ -18,24 +18,34 @@ const SelectedTests = ({ comparedTests }) => {
 
     return (
         <Box>
-            <Table isFullwidth isBordered>
+            <Table isBordered>
                 <thead>
                     <tr>
                         <th>Test number</th>
                         <th>Test name</th>
-                        <th>All threads</th>
                         <th>Request count</th>
-                        <th>Time elapsed</th>
-                        <th>Average response time per request [ms]</th>
+                        <th>All threads</th>
+                        <th>Time elapsed [s]</th>
+                        <th>Average response time per request [s]</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {comparedTests.map((test, index) =>
-                        <tr>
+                    {comparedTests.map((test, index) => {
+                        const beginTimeStamp = Number(test.testData[0].timeStamp);
+                        const beginDate = new Date(beginTimeStamp);
+                        const endTimeStamp = Number(test.testData.slice(-1)[0].timeStamp);
+                        const endDate = new Date(endTimeStamp);
+                        const elapsed = Math.floor((endDate.getTime() - beginDate.getTime()) / 1000);
+                        const reqCount = test.testData.length;
+                        const avg = Math.floor((elapsed/reqCount)*100)/100;
+                        return <tr key={index}>
                             <td>{index}</td>
                             <td>{test._doc.name}</td>
-                            <td>6846</td>
-                        </tr>)}
+                            <td>{reqCount}</td>
+                            <td>{test.testData[0].allThreads}</td>
+                            <td>{elapsed}</td>
+                            <td>{avg}</td>
+                        </tr>})}
                 </tbody>
             </Table>
         </Box>

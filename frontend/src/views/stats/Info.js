@@ -22,16 +22,12 @@ const Info = ({ testData, ...props }) => {
     const endDate = new Date(endTimeStamp);
     const elapsed = Math.floor((endDate.getTime() - beginDate.getTime()) / 1000)
 
-    const values = testData.map(r => r.elapsed);
 
     let threads = []
     testData.forEach(v => threads.includes(v.threadName.trim()) ? '' : threads.push(v.threadName.trim()));
     console.log(threads);
 
     console.log(testData[0]);
-
-
-    // console.log(values);
 
     return (
         <React.Fragment >

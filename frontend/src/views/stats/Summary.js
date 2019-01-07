@@ -51,12 +51,12 @@ const OverallStats = ({ testData }) => {
         </Title>
         <Box className="notification is-danger">
             <Columns>
-                {Object.keys(statistics).map(stat => 
-                <Column>
+            {Object.keys(statistics).filter(stat => stat !== "mode").map((stat, index) => 
+                <Column key={index}>
                     <div>
                         <div className="heading">{stat} [s]</div>
                         <Title isSize={5}>
-                            {statistics[stat]} 
+                            {statistics[stat].toString()} 
                         </Title>
                     </div>
                 </Column>)}
