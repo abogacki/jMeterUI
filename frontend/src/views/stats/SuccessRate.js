@@ -37,7 +37,7 @@ const PieCharts = ({ data, loadBenchmark }) => {
                 <Column>
                     <Panel>
                         <PanelHeading>
-                            Realized with Chart.js
+                            Request success rate
                         </PanelHeading>
                         <PanelBlock className="notification is-white">
                             {data && <Doughnut data={convertedData} />}
