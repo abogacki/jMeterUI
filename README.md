@@ -26,6 +26,17 @@ Runs the app in the development mode.
 
 Builds and runs the app in development mode at once.
 
+## How to use it?
+
+- To upload new test, log in to your account, and upload file `.csv` file by clicking UPLOAD button. 
+- Explore test results, calculate median, mode, percentiles and more in the stats tab
+- Analyze response success rate and request time overview with charts
+- Compare tests
+
+## Admin
+
+To log into admin account navigate to `localhost:8080/keystone/`. Log in with default credentials listed in Database User model section. Admin panel enables basic CRUD on every resource of the app (e.g. Test, Request).
+
 ## Application schema
 
 Application uses Docker containers to serve three images with docker-compose.
@@ -83,3 +94,5 @@ Request table contains:
 The complete database schema has been presented below:
 
 ![Alt text](docs/dbSchema.png?raw=true "DB Schema")
+
+
