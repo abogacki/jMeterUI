@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { list as getTestList } from '../actions/benchmarkDataActions';
-import { Title, Level, LevelItem, Box, Button } from 'bloomer';
+import { Title, Level, LevelItem, Box, Button, LevelLeft, LevelRight } from 'bloomer';
 
 const mapDispatchToProps = dispatch => ({
     getTestList: () => dispatch(getTestList())
@@ -53,21 +53,31 @@ const TestCard = ({ name, createdAt, testData, ...props }) => {
                         <Title>{name} </Title>
                         <hr />
                         <Level>
-                            <LevelItem>
-                                <div>
-                                    <div className="heading">Uploaded at:</div>
-                                    {date}
-                                </div>
-                            </LevelItem>
-                            <LevelItem>
-                                <div>
+                            <LevelLeft>
 
-                                    <div className="heading">
-                                        Requests samples count:
-                                </div>
-                                    {testData.length}
-                                </div>
-                            </LevelItem>
+                                <LevelItem>
+                                    <div>
+                                        <div className="heading">Uploaded at:</div>
+                                        <Title isSize={6}>
+                                            {date}
+                                        </Title>
+                                    </div>
+                                </LevelItem>
+                            </LevelLeft>
+                            <LevelRight>
+
+                                <LevelItem>
+                                    <div>
+                                        <div className="heading">
+                                            Requests samples count:
+                                    </div>
+                                        <Title isSize={6}>
+
+                                            {testData.length}
+                                        </Title>
+                                    </div>
+                                </LevelItem>
+                            </LevelRight>
                         </Level>
                         <Button className="is-rounded is-info" href={`/#/stats/${props['_id']}`}>Details</Button>
                     </div>

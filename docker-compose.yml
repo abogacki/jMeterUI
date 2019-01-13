@@ -35,15 +35,12 @@ services:
     networks:
       - jmeteruinetwork
   mongodb:
-    # image: mongo
-    # restart: always
     container_name: mongodb
     build:
       context: ./db
       dockerfile: Dockerfile
     ports:
         - 27017:27017
-    # command: mongod --noauth --smallfiles
     networks:
         - jmeteruinetwork
 networks: 
