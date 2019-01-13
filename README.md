@@ -30,7 +30,7 @@ Builds and runs the app in development mode at once.
 
 Application uses Docker containers to serve three images with docker-compose.
 
-![Alt text](docs/appSchema.png?raw=true "Title")
+![Alt text](docs/appSchema.png?raw=true "App Schema")
 
 User interface layer is build with contenerized CreateReactApp project. It comunicates with Node.js server to obtain data, which is stored in Mongo database. The api is a KeystoneJS CMS, with Admin panel to manage content of the application.
 
@@ -64,6 +64,7 @@ Name field represents the name of the `.csv` file used to upload the test. TestD
 
 ### Request
 Request table contains:
+* id
 * IdleTime
 * Latency
 * allThreads
@@ -79,4 +80,6 @@ Request table contains:
 * threadName
 * timeStamp
 
-Below the complete database schema has been presented
+The complete database schema has been presented below:
+
+![Alt text](docs/dbSchema.png?raw=true "DB Schema")
