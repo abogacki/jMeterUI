@@ -32,4 +32,51 @@ Application uses Docker containers to serve three images with docker-compose.
 
 ![Alt text](docs/appSchema.png?raw=true "Title")
 
-User interface layer is build with contenerized CreateReactApp project. It comunicates with Node.js server to obtain data, which is stored in Mongo database.
+User interface layer is build with contenerized CreateReactApp project. It comunicates with Node.js server to obtain data, which is stored in Mongo database. The api is a KeystoneJS CMS, with Admin panel to manage content of the application.
+
+## Database
+
+Database contains three tables based on Mongoose ODM models (User, Test, Request). <br> 
+
+### User
+User model contains fields such as:
+* name
+* email
+* password
+* canAccessKeystone
+
+Name, email and password field are obtained by registration process. The "canAccessKeystone" parameter is bool variable stored for validation purposes. User can access admin application, only if this parameter is set to true. For this application migration creates admin account with credentials: 
+
+#### name: admin 
+#### password: admin
+
+
+### Test
+Test table consists of: 
+* user
+* name
+* createdAt
+* file
+* testData
+
+User field stores Id from User table, which is automatically added by the backend application to Test when it is uploaded.
+Name field represents the name of the `.csv` file used to upload the test. TestData field is an array of id's from Request table.
+
+### Request
+Request table contains:
+* IdleTime
+* Latency
+* allThreads
+* bytes
+* dataType
+* elapsed
+* failureMessage
+* label
+* responseCode
+* responseMessage
+* sentBytes
+* success
+* threadName
+* timeStamp
+
+Below the complete database schema has been presented

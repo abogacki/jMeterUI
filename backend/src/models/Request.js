@@ -1,5 +1,4 @@
 var keystone = require('keystone');
-var Types = keystone.Field.Types;
 
 var Request = new keystone.List('Request');
 
