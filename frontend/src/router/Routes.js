@@ -78,8 +78,6 @@ const WrappedCompare = props => <HeroNavbarWrapper title={'Comparison'} componen
 const WrappedComparison = props => <HeroNavbarWrapper title={'Comparison'} component={<Comparison />} />
 
 const Routes = ({ match }) => {
-    const { testId } = match.params;
-    console.log(match);
     return (
         <React.Fragment>
             <Route path="/" exact component={WrappedIndex} />

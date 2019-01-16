@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Title, Table, Columns, Column, Icon } from 'bloomer';
+import { Title, Table, Columns, Column } from 'bloomer';
 
-const StatisticalData = ({ groupedData, groupedStats }) => {
-    // const calculatedStats = transformedGroups ? Object.keys(transformedGroups).map(groupName => calcStats(groupName, transformedGroups[groupName])) : null
+const StatisticalData = ({ groupedStats }) => {
     return (
         <div>
             <Title className="heading">
