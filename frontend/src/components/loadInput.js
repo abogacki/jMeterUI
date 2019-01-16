@@ -10,7 +10,6 @@ const mapDispatchToProps = dispatch => ({
 const handleUpload = async ({loadBenchmark, history} , e) => {
     const file = await e.target.files[0];
     const reader = new FileReader();
-    console.log(history, ';history');
     
     try {
         await reader.readAsText(file, "UTF-8");

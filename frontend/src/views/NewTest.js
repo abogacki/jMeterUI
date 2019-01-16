@@ -203,7 +203,7 @@ const convertTypes = ({ elapsed, request, config, ...props }) => {
         sentBytes: Math.floor(Math.random() / 100) * 100,
         success: true,
         threadName: request.responseURL,
-        timeStamp: new Date(config.metadata.endTime).getTime(),
+        timeStamp: new Date(config.metadata.endTime).getTime()*1000,
     })
 }
 

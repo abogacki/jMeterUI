@@ -38,7 +38,7 @@ const OverallStats = ({ testData }) => {
             {Object.keys(statistics).filter(stat => stat !== "mode").map((stat, index) => 
                 <Column key={index}>
                     <div>
-                        <div className="heading">{stat} [s]</div>
+                        <div className="heading">{stat} [ms]</div>
                         <Title isSize={5}>
                             {statistics[stat].toString()} 
                         </Title>

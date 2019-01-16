@@ -11,15 +11,12 @@ const mapStateToProps = state => ({
 
 const Info = ({ testData, ...props }) => {
     console.log(props);
-    const convertDate = (date) => {
-        const d = new Date(date)
-        return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`
-    };
-    const uploadDate = convertDate(props._doc.createdAt)
+    
+    const uploadDate = new Date(props._doc.createdAt)
     const beginTimeStamp = Number(testData[0].timeStamp);
-    const beginDate = new Date(beginTimeStamp);
+    const beginDate = new Date(Math.floor(beginTimeStamp/1000));
     const endTimeStamp = Number(testData.slice(-1)[0].timeStamp);
-    const endDate = new Date(endTimeStamp);
+    const endDate = new Date(Math.floor(endTimeStamp/1000));
     const elapsed = Math.floor((endDate.getTime() - beginDate.getTime()) / 1000)
 
 
@@ -29,6 +26,8 @@ const Info = ({ testData, ...props }) => {
 
     console.log(testData[0]);
 
+    console.log(beginDate.toLocaleDateString());
+    
     return (
         <React.Fragment >
             <Title className="heading">
@@ -54,7 +53,7 @@ const Info = ({ testData, ...props }) => {
 
                                     <div className="heading">Uploaded: </div>
                                     <Title>
-                                        <i className="fas fa-calendar"></i> {uploadDate}
+                                        <i className="fas fa-calendar"></i> {uploadDate.toLocaleDateString()}
                                     </Title>
                                 </div>
                             </LevelItem>
@@ -65,7 +64,7 @@ const Info = ({ testData, ...props }) => {
 
                                     <div className="heading">Performed: </div>
                                     <Title>
-                                        <i className="fas fa-calendar"></i> {`${beginDate.getDay()}/${beginDate.getMonth()}/${beginDate.getUTCFullYear()}`}
+                                        <i className="fas fa-calendar"></i> {beginDate.toLocaleDateString()}
                                     </Title>
                                 </div>
                             </LevelItem>
