@@ -25,12 +25,12 @@ const convertTypes = object => {
     })
 }
 
-export const load = ({ data, fileName }, history) => async dispatch => {
+export const load = ({ data, name }, history) => async dispatch => {
     const converted = csvToJs(data);
     const correctTypes = converted.map(o => convertTypes(o));    
     const formData = new FormData()
 
-    formData.append('name', fileName);
+    formData.append('name', name);
     formData.append('testData', JSON.stringify(correctTypes));
 
     try {
@@ -43,10 +43,40 @@ export const load = ({ data, fileName }, history) => async dispatch => {
             url });
 
         const testId = tests.data.post._id;
+        
         history.push(`/stats/${testId}`)
 
     } catch (error) {
         // console.error(error);
+        
+    }
+
+    // dispatch({ type: 'LOAD_BENCHMARK', payload })
+}
+
+export const create = ({ data, name }) => async dispatch => {
+    // const converted = csvToJs(data);
+    // const correctTypes = converted.map(o => convertTypes(o));    
+    const formData = new FormData()
+
+    formData.append('name', name);
+    formData.append('testData', JSON.stringify(data));
+
+    try {
+        const url = '/test/create';
+        const baseURL = 'http://localhost:8080/api';
+        const tests = await axios({ 
+            method: 'POST', 
+            data: formData,
+            baseURL, 
+            url });
+
+        const testId = tests.data.post._id;
+        
+        window.location.href = '/#/stats/'+testId
+
+    } catch (error) {
+        console.error(error);
         
     }
 

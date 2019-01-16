@@ -7,6 +7,7 @@ import About from '../views/About'
 import Compare from '../views/Compare'
 import Comparison from '../views/Comparison'
 import StatsIndex from '../views/stats/Stats'
+import NewTest from '../views/NewTest'
 import { IndexBackground } from "../svg/IndexBackground";
 import Header from '../components/rootComponents/Header'
 import { HeroBody, Title, Hero, } from 'bloomer';
@@ -76,11 +77,13 @@ const WrappedStats = props => <HeroNavbarWrapper title={'Stats'} component={<Sta
 const WrappedAbout = props => <HeroNavbarWrapper title={'About'} component={<About />} />
 const WrappedCompare = props => <HeroNavbarWrapper title={'Comparison'} component={<Compare />} />
 const WrappedComparison = props => <HeroNavbarWrapper title={'Comparison'} component={<Comparison />} />
+const WrappedNewTest = props => <HeroNavbarWrapper title={'New Test'} component={<NewTest />} />
 
 const Routes = ({ match }) => {
     return (
         <React.Fragment>
             <Route path="/" exact component={WrappedIndex} />
+            <Route path="/new/" exact component={WrappedNewTest} />
             <Route path="/tests" component={WrappedTests} />
             <Route exact path="/stats" render={() => <Redirect to="/tests" />} />
             <Route path="/stats/:testId" component={WrappedStats} />

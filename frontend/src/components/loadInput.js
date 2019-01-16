@@ -16,7 +16,7 @@ const handleUpload = async ({loadBenchmark, history} , e) => {
         await reader.readAsText(file, "UTF-8");
         // create object with filename etc
         reader.onload = (e) => loadBenchmark({
-            fileName: file.name,
+            name: file.name,
             data: e.target.result
         }, history);
     } catch (error) {

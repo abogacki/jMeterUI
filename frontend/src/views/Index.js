@@ -14,6 +14,7 @@ const Index = props => (
                     <br />
                     <br />
                     <LoaderInput />
+                    <a className="button is-rounded is-primary" href="/#/new"> Create test </a> 
                 </h2>
             </div>
         </div>
