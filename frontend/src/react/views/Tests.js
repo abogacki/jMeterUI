@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { list as getTestList } from '../../redux/actions/benchmarkDataActions';
+import { list as getTestList } from '../../redux/ducks/benchmarks';
 import { Title, Level, LevelItem, Box, Button, LevelLeft, LevelRight } from 'bloomer';
 
 const mapDispatchToProps = dispatch => ({

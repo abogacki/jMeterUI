@@ -1,5 +1,5 @@
 import React from 'react';
-import LoaderInput from '../loaderInput';
+import LoaderInput from '../LoaderInput';
 import { HeroBody } from 'bloomer/lib/layout/Hero/HeroBody';
 import { Container } from 'bloomer/lib/layout/Container';
 import { Subtitle } from 'bloomer/lib/elements/Subtitle';

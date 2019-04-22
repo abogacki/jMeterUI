@@ -69,7 +69,6 @@ const TestForm = ({ requestGroups, onGroupChange, onChange, addGroup, submit, re
           </Button>
         </Control>
       </Field>
-
       <Field>
         {requestGroups && requestGroups.length > 0 && requestGroups.map((rg, index) =>
           <RequestGroup onChange={onGroupChange} key={index} index={index} {...rg} />)

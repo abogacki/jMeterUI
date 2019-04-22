@@ -1,5 +1,5 @@
 import React from 'react';
-import { load as loadBenchmark } from '../redux/actions/benchmarkDataActions';
+import { load as loadBenchmark } from '../redux/ducks/benchmarks';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 

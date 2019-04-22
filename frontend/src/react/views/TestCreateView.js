@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { create as createBenchmark } from '../../redux/actions/benchmarkDataActions';
+import { create as createBenchmark } from '../../redux/ducks/benchmarks';
 import TestForm from '../TestForm'
 
 axios.interceptors.request.use((config) => {
@@ -23,73 +23,8 @@ axios.interceptors.response.use((response) => {
 
 
 class NewTestClassComponent extends React.Component {
-
-  handleGroupAdd(e) {
-    this.setState(prevState => prevState.requestGroups.push({ url: '', method: '', count: '' }))
-  }
-
-  async handleSubmit(e) {
-    this.setState(prevState => ({ ...prevState, isLoading: true }))
-
-    const onSuccess = (response) => {
-      this.setState(prevState => ({ ...prevState, isLoading: false }))
-      const converted = response.map(r => convertTypes(r));
-
-      this.props.createBenchmark({ name: this.state.name, data: converted })
-
-    }
-
-    try {
-      const { requestGroups, baseURL } = this.state;
-
-      const requests = [];
-
-      requestGroups.forEach(({ count, ...rg }) => range(count).forEach(r => requests.push(rg)));
-
-      const results = await Promise.all(requests.map(({ name, ...rest }) => axios({ baseURL, ...rest })))
-
-      onSuccess(results)
-    } catch (error) {
-      this.setState(prevState => ({ ...prevState, isLoading: false }))
-      alert(error)
-    }
-  }
-
-  handleChange(e) {
-    e.persist()
-    this.setState(prevState =>
-      ({
-        ...prevState,
-        [e.target.name]: e.target.value
-      })
-    )
-  }
-  handleGroupChange(e, index) {
-    e.persist()
-    console.log(e.target.name, index);
-    let requestGroups = [...this.state.requestGroups]
-    requestGroups[index] = {
-      ...requestGroups[index],
-      [e.target.name]: e.target.value
-    };
-
-    this.setState(prevState => ({
-      ...prevState,
-      requestGroups
-    }), () => console.log(this.state))
-  }
   render() {
-    return (
-      <React.Fragment>
-        <TestForm
-          onChange={this.handleChange.bind(this)}
-          addGroup={this.handleGroupAdd.bind(this)}
-          onGroupChange={this.handleGroupChange.bind(this)}
-          submit={this.handleSubmit.bind(this)}
-          {...this.state}
-        />
-      </React.Fragment>
-    )
+    return <TestForm />
   }
 }
 
@@ -116,7 +51,7 @@ const convertTypes = ({ elapsed, request, config }) => {
     sentBytes: Math.floor(Math.random() / 100) * 100,
     success: true,
     threadName: request.responseURL,
-    timeStamp: new Date(config.metadata.endTime).getTime() * 1000,
+    timeStamp: new Date(config.metadata.startTime).getTime() * 1000,
   })
 }
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import StatsRouter from "./StatsRoutes";
 import { Container, Columns, Column, Menu, MenuLabel, MenuList, MenuLink } from "bloomer";
-import { getDetails as getTestDetails } from '../../../redux/actions/benchmarkDataActions';
+import { getDetails as getTestDetails } from '../../../redux/ducks/benchmarks';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 

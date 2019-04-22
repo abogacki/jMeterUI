@@ -49,7 +49,7 @@ const PieCharts = ({ data, loadBenchmark }) => {
 }
 
 const mapStateToProps = state => ({
-  data: state.benchmark.test.data.testData,
+  data: state.benchmarks.test.data.testData,
 })
 export default connect(mapStateToProps)(PieCharts)
 
