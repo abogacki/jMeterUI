@@ -8,10 +8,14 @@ import Info from './Info'
 defaults.global.defaultFontFamily = "'Oxygen', sans-serif";
 
 const mapStateToProps = state => ({
-    testData: state.benchmarks.test.data.testData
+    testData: state.benchmarks.test.data.testData,
+    benchmark: state.benchmarks
 })
 
-const OverallStats = ({ testData }) => {
+const OverallStats = ({ testData, benchmark }) => {
+    console.log(testData);
+    console.log(benchmark);
+    
     const values = testData.map(r => r.elapsed);
 
     const statistics = {
@@ -25,7 +29,7 @@ const OverallStats = ({ testData }) => {
     }
 
     return (
-        <React.Fragment>
+        <>
         <Title className="heading">
             Overall statistics
         </Title>
@@ -42,15 +46,15 @@ const OverallStats = ({ testData }) => {
                 </Column>)}
             </Columns>
         </Box>
-        </React.Fragment>
+        </>
     )
 }
 
 const Summary = connect(mapStateToProps)(OverallStats)
 
 export default props => (
-    <React.Fragment>
+    <>
         <Info />
         <Summary />
-    </React.Fragment>
+    </>
 )

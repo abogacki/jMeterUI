@@ -19,7 +19,7 @@ const Info = ({ testData, ...props }) => {
   let threads = []
   testData.forEach(v => threads.includes(v.threadName.trim()) ? '' : threads.push(v.threadName.trim()));
   return (
-    <React.Fragment >
+    <  >
       <Title className="heading">
         <i className="fas fa-tachometer-alt"></i> Info
             </Title>
@@ -118,14 +118,14 @@ const Info = ({ testData, ...props }) => {
           </Box>
         </Column>
       </Columns>
-    </React.Fragment>
+    </ >
   )
 }
 
 const InfoConnect = props => (
-  <React.Fragment>
+  <>
     {props._doc && <Info {...props} />}
-  </React.Fragment>
+  </>
 )
 
 export default connect(mapStateToProps)(InfoConnect)

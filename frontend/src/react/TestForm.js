@@ -7,7 +7,6 @@ import { Input } from 'bloomer/lib/elements/Form/Input';
 import { Select } from 'bloomer/lib/elements/Form/Select';
 import { Button } from 'bloomer/lib/elements/Button';
 import { Icon } from 'bloomer/lib/elements/Icon';
-import { Formik } from 'formik'
 
 const RequestGroup = ({ index, onChange, url, method, count }) => (
   <Field>

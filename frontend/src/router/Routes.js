@@ -16,13 +16,13 @@ const WrappedCreateTest = () => <HeroNavbarWrapper title={'Create test'} compone
 
 const Routes = () => {
   return (
-    <React.Fragment>
+    <>
       <Route path="/" exact component={WrappedHome} />
       <Route exact path="/tests/create" exact component={WrappedCreateTest} />
       <Route exact path="/tests" component={WrappedTests} />
       <Route path="/stats/:testId" component={WrappedStats} />
       <Route path="/about" component={WrappedAbout} />
-    </React.Fragment>
+    </>
   )
 }
 

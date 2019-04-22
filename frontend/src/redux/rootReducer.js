@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import benchmarks from './ducks/benchmarks'
+import benchmarks from './benchmarks/index'
 
 
 const rootReducer = combineReducers({benchmarks})

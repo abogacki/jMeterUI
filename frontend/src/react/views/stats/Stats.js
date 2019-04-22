@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import StatsRouter from "./StatsRoutes";
 import { Container, Columns, Column, Menu, MenuLabel, MenuList, MenuLink } from "bloomer";
-import { getDetails as getTestDetails } from '../../../redux/ducks/benchmarks';
+import { getDetails as getTestDetails } from '../../../redux/benchmarks/index';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 
@@ -40,6 +40,7 @@ const StatsMenu = ({ testId }) => {
 const mapDispatchToProps = dispatch => ({
   getTestDetails: testId => dispatch(getTestDetails(testId))
 })
+
 
 class StatsIndex extends Component {
   componentWillMount() {
