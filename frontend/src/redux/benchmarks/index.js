@@ -109,6 +109,6 @@ export const getDetails = testId => async dispatch => {
     const testDetails = await axios({ method: 'get', baseURL, url });
     onSuccess(testDetails);
   } catch (error) {
-    console.log(error);
+    console.error(error);
   } 
 }

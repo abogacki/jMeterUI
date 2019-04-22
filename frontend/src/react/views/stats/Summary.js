@@ -13,11 +13,7 @@ const mapStateToProps = state => ({
 })
 
 const OverallStats = ({ testData, benchmark }) => {
-    console.log(testData);
-    console.log(benchmark);
-    
     const values = testData.map(r => r.elapsed);
-
     const statistics = {
         mean: Math.round(statsLite.mean(values) * 100) / 100,
         median: Math.round(statsLite.median(values) * 100) / 100,

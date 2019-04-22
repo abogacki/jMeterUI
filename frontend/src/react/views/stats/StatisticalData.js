@@ -49,9 +49,6 @@ const Row = ({ data }) => {
 }
 
 const printStringOrArray = data => {
-  console.log(typeof (data));
-  console.log(data);
-
   if (typeof (data) == "object") {
     return data.join(', ')
   } else {
