@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { create as createBenchmark } from '../../redux/benchmarks/index';
-import TestForm from '../TestForm'
+import TestForm2 from '../TestForm2'
 
 axios.interceptors.request.use((config) => {
   config.metadata = { startTime: new Date() }
@@ -21,7 +21,7 @@ axios.interceptors.response.use((response) => {
   return Promise.reject(error);
 });
 
-const TestCreateView = () => <TestForm />
+const TestCreateView = () => <TestForm2/>
 
 const mapDispatchToProps = dispatch => ({
   createBenchmark: (data, history) => dispatch(createBenchmark(data, history))

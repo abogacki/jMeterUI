@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from "react-router-dom";
 import Home from '../react/views/Home'
-import Tests from '../react/views/TestsList/Tests'
+import Tests from '../react/views/testsList/Tests'
 import About from '../react/views/About'
 import StatsIndex from '../react/views/stats/Stats'
 import CreateTest from '../react/views/TestCreateView'
@@ -17,8 +17,8 @@ const WrappedCreateTest = () => <HeroNavbarWrapper title={'Create test'} compone
 const Routes = () => {
   return (
     <>
-      <Route path="/" exact component={WrappedHome} />
-      <Route exact path="/tests/create" exact component={WrappedCreateTest} />
+      <Route exact path="/" component={WrappedHome} />
+      <Route exact path="/tests/create" component={WrappedCreateTest} />
       <Route exact path="/tests" component={WrappedTests} />
       <Route path="/stats/:testId" component={WrappedStats} />
       <Route path="/about" component={WrappedAbout} />

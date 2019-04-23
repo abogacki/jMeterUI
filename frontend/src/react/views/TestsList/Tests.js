@@ -18,6 +18,9 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   testsLists: state.benchmarks.test.list
 })
+
+const Tests = 
+
 class Tests extends Component {
   componentWillMount() {
     this.props.getTestList()

@@ -58,7 +58,6 @@ const TestForm = ({ requestGroups, onGroupChange, onChange, addGroup, submit, re
     <Container>
       <EnhancedFormField label="Name" name="name" value={name} />
       <EnhancedFormField label="Base URL" name="baseURL" value={baseURL} />
-
       <Field>
         <Label>Add request group</Label>
         <Control>

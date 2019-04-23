@@ -6,7 +6,7 @@ import { Subtitle } from 'bloomer/lib/elements/Subtitle';
 import { Title } from 'bloomer/lib/elements/Title';
 
 const Home = () => (
-  <HeroBody className="is-fullheight">
+  <HeroBody className="is-fullheight is-bold">
     <Container className=" has-text-centered">
       <Title>
         <span>Welcome to </span>
