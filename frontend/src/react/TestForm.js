@@ -1,88 +1,176 @@
-import React from 'react'
-import { Container } from 'bloomer/lib/layout/Container';
-import { Field } from 'bloomer/lib/elements/Form/Field/Field';
+import React from 'react';
+import { withFormik, FieldArray, Field as FormikField } from 'formik';
+import * as Yup from 'yup';
+import { Help } from 'bloomer/lib/elements/Form/Help';
 import { Label } from 'bloomer/lib/elements/Form/Label';
-import { Control } from 'bloomer/lib/elements/Form/Control';
 import { Input } from 'bloomer/lib/elements/Form/Input';
-import { Select } from 'bloomer/lib/elements/Form/Select';
+import { Control } from 'bloomer/lib/elements/Form/Control';
+import { Container } from 'bloomer/lib/layout/Container';
 import { Button } from 'bloomer/lib/elements/Button';
 import { Icon } from 'bloomer/lib/elements/Icon';
+import { Field } from 'bloomer/lib/elements/Form/Field/Field';
+import { Select } from 'bloomer/lib/elements/Form/Select';
 
-const RequestGroup = ({ index, onChange, url, method, count }) => (
+
+// eslint-disable-next-line
+const matchUrlFormat = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}/
+const urlRegExp = new RegExp(matchUrlFormat)
+
+const formikEnhancer = withFormik({
+  validationSchema: Yup.object().shape({
+    name: Yup.string()
+      .required('Name is required.')
+      .min(3, "Benchmak name must have at least 3 characters"),
+    baseURL: Yup.string()
+      .matches(urlRegExp, 'Base URL must begin with http:// or https:// prefix')
+      .required('Base url is required.'),
+    email: Yup.string()
+      .email('Invalid email address')
+      .required('Email is required!'),
+  }),
+
+  mapPropsToValues: ({ fields }) => ({
+    ...fields,
+  }),
+  handleSubmit: (payload, { setSubmitting }) => {
+    alert(payload.email);
+    setSubmitting(false);
+  },
+  displayName: 'CreateBenchmarkForm',
+});
+
+const DeleteButton = props => <Button isColor="danger" {...props}><Icon className="fas fa-times" /></Button>
+
+const withFormField = Component => ({ label, id, error, addons, ...props }) =>
   <Field>
-    <hr />
-    <Label>Group #{index + 1}</Label>
-    <Control>
-      <Field>
-        <Control>
-          <Label>Request Url</Label>
-          <Input type="text" name="url" onChange={e => onChange(e, index)} value={url} />
-        </Control>
-      </Field>
-      <Field>
-        <Control>
-          <Label>Request Method</Label>
-          <Select name="method" onChange={e => onChange(e, index)} value={method}>
-            <option value="" disabled>Choose method</option>
-            <option value="GET">GET</option>
-            <option value="POST">POST</option>
-            <option value="PUT">PUT</option>
-          </Select>
-        </Control>
-      </Field>
-      <Field>
-        <Control>
-          <Label>Request count</Label>
-          <Input type="number" name="count" onChange={e => onChange(e, index)} value={count} />
-        </Control>
-      </Field>
-    </Control>
+    <Label htmlFor={id}>{label}</Label>
+    <Field hasAddons>
+      <Control isExpanded>
+        <Component id={id} {...props} className={!!error ? "is-danger" : ''} />
+      </Control>
+      {addons && <Control>
+        {addons}
+      </Control>}
+    </Field>
+    {error && <Help className="is-danger" >{error}</Help>}
   </Field>
-)
 
-const FormField = ({ label, ...props }) => (
-  <Field>
-    <Label>{label}</Label>
-    <Control>
-      <Input {...props} />
-    </Control>
-  </Field>)
+const TextField = withFormField(Input)
 
-const enhanceFormField = onChange => props => <FormField onChange={onChange} {...props} />
+const SelectField = withFormField(Select)
 
-const TestForm = ({ requestGroups, onGroupChange, onChange, addGroup, submit, reset, name, baseURL, isLoading }) => {
-
-  const EnhancedFormField = enhanceFormField(onChange)
-
+const MyForm = props => {
+  const {
+    values,
+    touched,
+    errors,
+    dirty,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    handleReset,
+    isSubmitting,
+  } = props;
   return (
-    <Container>
-      <EnhancedFormField label="Name" name="name" value={name} />
-      <EnhancedFormField label="Base URL" name="baseURL" value={baseURL} />
+    <form onSubmit={handleSubmit}>
+      <TextField
+        id="name"
+        type="text"
+        label="Benchmark name"
+        placeholder="benchmark-01"
+        error={touched.name && errors.name}
+        value={values.name}
+        onChange={handleChange}
+        onBlur={handleBlur}
+      />
+      <TextField
+        id="baseURL"
+        type="text"
+        label="Base url"
+        placeholder="http://somedomain.com"
+        error={touched.baseURL && errors.baseURL}
+        value={values.baseURL}
+        onChange={handleChange}
+        onBlur={handleBlur}
+      />
+
       <Field>
-        <Label>Add request group</Label>
+        <Label>
+          Request groups
+        </Label>
+        <FieldArray
+          name='requestGroups'
+          render={arrayHelpers => (
+            <div>
+              {values.requestGroups && values.requestGroups.length > 0 &&
+                values.requestGroups.map((grp, index) =>
+                <>
+                  <Control key={index}>
+                    <FormikField
+                      component={TextField}
+                      addons={<DeleteButton onClick={() => arrayHelpers.remove(index)} />}
+                      name={`requestGroups.${index}.route`}
+                      id={`requestGroups.${index}.route`}
+                      placeholder='/type/some/route'
+                      label={'Route'}
+                    />
+
+                    <FormikField
+                      component={SelectField}
+                      name={`requestGroups.${index}.type`}
+                      id={`requestGroups.${index}.type`}
+                      label='Requests type'
+                    >
+                      <option value="" disabled>Choose method</option>
+                      <option value="GET">GET</option>
+                      <option value="POST">POST</option>
+                      <option value="PUT">PUT</option>
+                    </FormikField>
+
+                    <FormikField
+                      component={TextField}
+                      type="number"
+                      name={`requestGroups.${index}.count`}
+                      id={`requestGroups.${index}.count`}
+                      placeholder='Request count'
+                      label={'Count'}
+                    />
+                  </Control>
+                  <hr/>
+                  </>
+                )}
+              <Field>
+                <Control>
+                  <Button className="is-rounded" isColor="primary" onClick={() => arrayHelpers.push('')}>
+                    Add request group
+              </Button>
+                </Control>
+              </Field>
+            </div>
+          )
+          } />
+      </Field>
+      <Field className="is-grouped">
         <Control>
-          <Button onClick={addGroup}>
-            <Icon className="fas fa-plus" />
-            <span>Add</span>
+          <Button
+            className="is-rounded"
+            onClick={handleReset}
+            disabled={!dirty || isSubmitting}
+          >
+            Reset
+      </Button>
+        </Control>
+        <Control>
+          <Button type="submit" className="is-link is-rounded" disabled={isSubmitting}>
+            Submit
           </Button>
         </Control>
       </Field>
-      <Field>
-        {requestGroups && requestGroups.length > 0 && requestGroups.map((rg, index) =>
-          <RequestGroup onChange={onGroupChange} key={index} index={index} {...rg} />)
-        }
-      </Field>
 
-      <Field isGrouped>
-        <Control>
-          <Button isColor='primary' onClick={submit} isLoading={isLoading}>Submit</Button>
-        </Control>
-        <Control>
-          <Button isLink onClick={reset}>Cancel</Button>
-        </Control>
-      </Field>
-    </Container>
-  )
-}
+    </form>
+  );
+};
 
-export default TestForm
+const MyEnhancedForm = formikEnhancer(MyForm);
+
+export default () => <Container><MyEnhancedForm fields={{ name: '', baseURL: '', requestGroups: [] }} /></Container>
