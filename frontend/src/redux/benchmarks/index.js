@@ -6,30 +6,23 @@ import calcStats from './calcStats'
 const LIST_BENCHMARKS_BEGIN = "jmeterui/benchmarks/LOAD_LIST_BEGIN"
 const LIST_BENCHMARKS_SUCCESS = "jmeterui/benchmarks/LIST_BENCHMARKS_SUCCESS"
 const LIST_BENCHMARKS_ERROR = "jmeterui/benchmarks/LIST_BENCHMARKS_ERROR"
-const LOAD_BENCHMARK = 'jmeterui/benchmarks/LOAD_BENCHMARK';
 const LOAD_TESTDETAILS_BEGIN = "jmeterui/benchmarks/LOAD_TESTDETAILS_BEGIN"
 const UPDATE_DETAILS = "jmeterui/benchmarks/UPDATE_DETAILS"
 
-
-const testInitialState = {
-  list: [],
-  data: {
-    testData: []
-  },
-  groupedData: {},
-  groupedStats: [],
-  isLoading: false
-}
-
 const initialState = {
-  test: testInitialState,
-  benchmark: undefined
+  test: {
+    list: [],
+    data: {
+      testData: []
+    },
+    groupedData: {},
+    groupedStats: [],
+    isLoading: false
+  }
 }
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case LOAD_BENCHMARK:
-      return { ...state, benchmark: { ...action.payload } };
     case LIST_BENCHMARKS_SUCCESS:
       return { ...state, test: { ...state.test, list: action.payload.test } }
     case LOAD_TESTDETAILS_BEGIN:
