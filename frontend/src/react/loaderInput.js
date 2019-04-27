@@ -3,7 +3,7 @@ import { createFromFile as createBenchmarkFromFile } from '../redux/benchmarks/i
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 
-const loadjMeterCsv = (callback = () => null) => async (e) => {
+const loadFile = (callback = () => null) => async (e) => {
   const file = await e.target.files[0];
   const reader = new FileReader();
 
@@ -30,7 +30,7 @@ const mapDispatchToProps = dispatch => ({
 const LoaderInput = ({ createBenchmarkFromFile }) => (
   <>
     <label htmlFor="uploadBenchmark" className="button is-rounded">Upload</label>
-    <input id="uploadBenchmark" type="file" accept=".csv" className="is-hidden" onChange={loadjMeterCsv(createBenchmarkFromFile)} />
+    <input id="uploadBenchmark" type="file" accept=".csv" className="is-hidden" onChange={loadFile(createBenchmarkFromFile)} />
   </>
 )
 

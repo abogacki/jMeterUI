@@ -12,18 +12,6 @@ import { validationSchema } from './validationSchema'
 import { nestedFieldEnhancer } from './nestedFieldEnhancer';
 import { DeleteButton } from '../DeleteButton';
 
-const formikEnhancer = withFormik({
-  validationSchema,
-  mapPropsToValues: ({ fields }) => ({
-    ...fields,
-  }),
-  handleSubmit: (values, { setSubmitting }) => {
-    setSubmitting(false);
-    alert(JSON.stringify(values))
-  },
-  displayName: 'CreateBenchmarkForm',
-});
-
 const TextField = withFormField(Input)
 const SelectField = withFormField(Select)
 
@@ -143,6 +131,18 @@ const TestForm = props => {
     </form>
   );
 };
+
+const formikEnhancer = withFormik({
+  validationSchema,
+  mapPropsToValues: ({ fields }) => ({
+    ...fields,
+  }),
+  handleSubmit: (values, { setSubmitting }) => {
+    setSubmitting(false);
+    alert(JSON.stringify(values))
+  },
+  displayName: 'CreateBenchmarkForm',
+});
 
 const EnhancedTestForm = formikEnhancer(TestForm);
 

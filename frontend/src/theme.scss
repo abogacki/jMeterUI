@@ -16,13 +16,16 @@ body {
     margin: 0 0;
 }
 
-.liquid-cheese-background{
-    position: absolute;
-    // z-index: -999;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
+.toasts-container{
+  text-align: center;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 1px;
+  & > div {
+    display: inline-block;
+  }
 }
-
-
