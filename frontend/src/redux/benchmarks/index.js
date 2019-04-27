@@ -3,12 +3,32 @@ import { csvToJs } from '../../helpers/csvTojs'
 import groupData from './groupData'
 import calcStats from './calcStats'
 
-const LIST_BENCHMARKS_BEGIN = "jmeterui/benchmarks/LOAD_LIST_BEGIN"
-const LIST_BENCHMARKS_SUCCESS = "jmeterui/benchmarks/LIST_BENCHMARKS_SUCCESS"
-const LIST_BENCHMARKS_ERROR = "jmeterui/benchmarks/LIST_BENCHMARKS_ERROR"
-const LOAD_TESTDETAILS_BEGIN = "jmeterui/benchmarks/LOAD_TESTDETAILS_BEGIN"
-const UPDATE_DETAILS = "jmeterui/benchmarks/UPDATE_DETAILS"
+axios.interceptors.request.use((config) => {
+  config.metadata = { startTime: new Date() }
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
 
+axios.interceptors.response.use((response) => {
+  response.config.metadata.endTime = new Date()
+  response.elapsed = response.config.metadata.endTime - response.config.metadata.startTime
+  return response;
+}, (error) => {
+  error.config.metadata.endTime = new Date();
+  error.elapsed = 0;
+  return Promise.reject(error);
+});
+
+const LIST_BENCHMARKS_BEGIN = 'jmeterui/benchmarks/LOAD_LIST_BEGIN'
+const LIST_BENCHMARKS_SUCCESS = 'jmeterui/benchmarks/LIST_BENCHMARKS_SUCCESS'
+const LIST_BENCHMARKS_ERROR = 'jmeterui/benchmarks/LIST_BENCHMARKS_ERROR'
+const LOAD_TESTDETAILS_BEGIN = 'jmeterui/benchmarks/LOAD_TESTDETAILS_BEGIN'
+const UPDATE_DETAILS = 'jmeterui/benchmarks/UPDATE_DETAILS'
+const START_BENCHMARK = 'jmeterui/benchmarks/START_BENCHMARK'
+const END_BENCHMARK = 'jmeterui/benchmarks/END_BENCHMARK'
+
+// make nested reducers for data called "details", and for list
 const initialState = {
   test: {
     list: [],
@@ -41,12 +61,34 @@ export const createFromFile = ({ data, name }) => async dispatch => {
   dispatch(create({ name, data: benchmarkDataObject }))
 }
 
+export const createFromForm = (formData) => async dispatch => {
+  await performTest(formData);
+
+}
+
+// perform batches of tests
+const performTest = async ({ name, baseURL, requestGroups }) => {
+  let requests = []
+  requestGroups.forEach(({ count, ...group }) => range(count).forEach(() => requests.push(group)))
+  console.log(requests);
+  const results = await Promise.all(requests.map(({ url, method }) => axios({ baseURL, url, method: 'get', headers: { 'Access-Control-Allow-Origin': '*' } })))
+  console.log(results);
+
+}
+
+const range = (index = 100) => {
+  let arr = []
+  for (let i = 0; i < index; i++) {
+    arr[i] = i;
+  }
+  return arr
+}
 
 export const create = ({ data, name }) => async () => {
   const newData = new FormData()
   newData.append('name', name)
   newData.append('testData', JSON.stringify(data))
-  
+
   try {
 
     const url = '/test/create';
@@ -60,7 +102,7 @@ export const create = ({ data, name }) => async () => {
     });
 
     const testId = response.data.post._id;
-    
+
     // navigate to new request
     window.location.href = '/#/stats/' + testId;
 
@@ -90,7 +132,7 @@ export const list = () => async dispatch => {
   }
 }
 
-export const updateDetails = (data) => ({type: UPDATE_DETAILS, payload: data })
+export const updateDetails = (data) => ({ type: UPDATE_DETAILS, payload: data })
 
 export const getDetails = testId => async dispatch => {
   const onSuccess = response => dispatch(updateDetails(response.data))
@@ -103,5 +145,5 @@ export const getDetails = testId => async dispatch => {
     onSuccess(testDetails);
   } catch (error) {
     console.error(error);
-  } 
+  }
 }

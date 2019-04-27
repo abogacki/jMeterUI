@@ -5,8 +5,8 @@ const matchUrlFormat = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}/
 const urlRegExp = new RegExp(matchUrlFormat)
 
 const requestGroupValidationSchema = Yup.object().shape({
-  route: Yup.string('Route must be a string').required('Route is required'),
-  type: Yup.string('Type must be a string').required('Type is required'),
+  url: Yup.string('Url must be a string').required('Url is required'),
+  method: Yup.string('Type must be a string').required('Type is required'),
   count: Yup.number('Count must be a number').required('Count is required'),
 })
 

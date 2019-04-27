@@ -69,18 +69,18 @@ const TestForm = props => {
                   <Control key={index}>
                       <NestedTextField
                         addons={<DeleteButton onClick={() => arrayHelpers.remove(index)} />}
-                        name={`requestGroups.${index}.route`}
-                        id={`requestGroups.${index}.route`}
-                        placeholder='/type/some/route'
-                        label='Route'
-                        value={values.requestGroups[index].route}
+                        name={`requestGroups.${index}.url`}
+                        id={`requestGroups.${index}.url`}
+                        placeholder='/type/some/url'
+                        label='Url'
+                        value={values.requestGroups[index].url}
                         onChange={handleChange}
                       />
                       <NestedSelect
-                        name={`requestGroups.${index}.type`}
-                        id={`requestGroups.${index}.type`}
-                        label='Requests type'
-                        value={values.requestGroups[index].type}
+                        name={`requestGroups.${index}.method`}
+                        id={`requestGroups.${index}.method`}
+                        label='Requests method'
+                        value={values.requestGroups[index].method}
                         onChange={handleChange}
                         error={touched.requestGroups && errors.requestGroups}
                       >
@@ -134,27 +134,30 @@ const TestForm = props => {
 
 const formikEnhancer = withFormik({
   validationSchema,
-  mapPropsToValues: ({ fields }) => ({
+  mapPropsToValues: ({ fields, onSubmit }) => ({
     ...fields,
+    onSubmit
   }),
-  handleSubmit: (values, { setSubmitting }) => {
+  handleSubmit: (values, { setSubmitting, props }) => {
     setSubmitting(false);
-    alert(JSON.stringify(values))
+    props.onSubmit(values)
   },
   displayName: 'CreateBenchmarkForm',
 });
 
 const EnhancedTestForm = formikEnhancer(TestForm);
 
-export default () =>
+export default ({onSubmit}) =>
   <Container>
     <EnhancedTestForm
+      onSubmit={onSubmit}
       fields={
         {
           name: 'Somename',
           baseURL: 'http://google.com',
           requestGroups: [
-            { type: 'GET', count: 10, route: '/' }
+            { method: 'GET', count: 10, url: '/' },
+            { method: 'GET', count: 1, url: '/gmail' }
           ]
         }
       } />

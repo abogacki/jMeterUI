@@ -19,7 +19,7 @@ export const addToast = (options = {}) => ({ type: ADD_TOAST, payload: createToa
 
 export const removeToast = toastId => ({ type: REMOVE_TOAST, payload: toastId })
 
-export const addAndRemoveToast = (options) => async dispatch => {
+export const addAndRemoveToast = (options = {}) => async dispatch => {
   try {
     
     const newToast = createToast(options)
@@ -31,6 +31,6 @@ export const addAndRemoveToast = (options) => async dispatch => {
   } catch (error) {
 
     console.error(error)
-
+    
   }
-} 
+}

@@ -22,7 +22,7 @@ const Toast = ({ message, id, onDelete, ...props }) => {
   console.log(props);
   return (
   <Notification {...props}>
-    {message}
+    {message()}
     <Delete onClick={() => onDelete(id)} />
   </Notification>
 )}
