@@ -1,36 +1,16 @@
 import React from 'react';
-import { withFormik, FieldArray, Field as FormikField, getIn } from 'formik';
-import * as Yup from 'yup';
-import { Help } from 'bloomer/lib/elements/Form/Help';
+import { withFormik, FieldArray } from 'formik';
+import { withFormField } from '../hocs/withFormField'
 import { Label } from 'bloomer/lib/elements/Form/Label';
 import { Input } from 'bloomer/lib/elements/Form/Input';
 import { Control } from 'bloomer/lib/elements/Form/Control';
 import { Container } from 'bloomer/lib/layout/Container';
 import { Button } from 'bloomer/lib/elements/Button';
-import { Icon } from 'bloomer/lib/elements/Icon';
 import { Field } from 'bloomer/lib/elements/Form/Field/Field';
 import { Select } from 'bloomer/lib/elements/Form/Select';
-
-
-// eslint-disable-next-line
-const matchUrlFormat = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}/
-const urlRegExp = new RegExp(matchUrlFormat)
-
-const requestGroupValidationSchema = Yup.object().shape({
-  route: Yup.string().required(),
-  type: Yup.string().required(),
-  count: Yup.number().required(),
-})
-
-const validationSchema = Yup.object().shape({
-  name: Yup.string()
-    .required('Name is required.')
-    .min(3, "Benchmak name must have at least 3 characters"),
-  baseURL: Yup.string()
-    .matches(urlRegExp, 'Base URL must begin with http:// or https:// prefix')
-    .required('Base url is required.'),
-  requestGroups: Yup.array().of(requestGroupValidationSchema),
-})
+import { validationSchema } from './validationSchema'
+import { nestedFieldEnhancer } from './nestedFieldEnhancer';
+import { DeleteButton } from '../DeleteButton';
 
 const formikEnhancer = withFormik({
   validationSchema,
@@ -38,48 +18,17 @@ const formikEnhancer = withFormik({
     ...fields,
   }),
   handleSubmit: (values, { setSubmitting }) => {
-    console.log(values);
     setSubmitting(false);
+    alert(JSON.stringify(values))
   },
   displayName: 'CreateBenchmarkForm',
 });
 
-const createNestedFieldWithError = Component => ({ name, ...props }) => {
-  return (
-    <FormikField
-      {...props}
-      render={({ form }) => {
-        const error = getIn(form.errors, name);
-        const touch = getIn(form.touched, name);
-        return <Component {...props} error={touch && error ? error : null} />
-      }}
-    />
-  )
-}
-
-
-const DeleteButton = props => <Button isColor="danger" {...props}><Icon className="fas fa-times" /></Button>
-
-const withFormField = Component => ({ label, id, error, addons, meta, ...props }) =>
-<Field>
-    <Label htmlFor={id}>{label}</Label>
-    <Field hasAddons>
-      <Control isExpanded>
-        <Component id={id} {...props} className={!!error ? "is-danger" : ''} />
-      </Control>
-      {addons && <Control>
-        {addons}
-      </Control>}
-    </Field>
-    {error && <Help className="is-danger" >{error}</Help>}
-  </Field>
-
 const TextField = withFormField(Input)
-
 const SelectField = withFormField(Select)
 
-const NestedSelect = createNestedFieldWithError(SelectField)
-const NestedTextField = createNestedFieldWithError(TextField)
+const NestedSelect = nestedFieldEnhancer(SelectField)
+const NestedTextField = nestedFieldEnhancer(TextField)
 
 const TestForm = props => {
   const {
@@ -106,6 +55,7 @@ const TestForm = props => {
         onChange={handleChange}
         onBlur={handleBlur}
       />
+      <br />
       <TextField
         id="baseURL"
         type="text"
@@ -116,6 +66,7 @@ const TestForm = props => {
         onChange={handleChange}
         onBlur={handleBlur}
       />
+      <br />
 
       <Field>
         <Label>
@@ -127,8 +78,7 @@ const TestForm = props => {
             <div>
               {values.requestGroups && values.requestGroups.length > 0 &&
                 values.requestGroups.map((grp, index) =>
-                  <div key={index}>
-                    <Control>
+                  <Control key={index}>
                       <NestedTextField
                         addons={<DeleteButton onClick={() => arrayHelpers.remove(index)} />}
                         name={`requestGroups.${index}.route`}
@@ -161,9 +111,8 @@ const TestForm = props => {
                         value={values.requestGroups[index].count}
                         onChange={handleChange}
                       />
-                    </Control>
                     <hr />
-                  </div>
+                  </Control>
                 )}
               <Field>
                 <Control>
