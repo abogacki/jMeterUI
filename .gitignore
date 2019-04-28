@@ -29,3 +29,5 @@ src/**/*.css
 .vscode
 
 mongodata
+
+/.scannerwork
