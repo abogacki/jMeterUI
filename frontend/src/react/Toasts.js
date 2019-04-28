@@ -1,7 +1,7 @@
 import React from 'react'
 import { Notification } from 'bloomer/lib/elements/Notification';
 import { connect } from 'react-redux';
-import { removeToast } from '../redux/toasts';
+import { removeToast } from '../redux/toasts/toasts';
 import { Delete } from 'bloomer/lib/elements/Delete';
 import posed, { PoseGroup } from 'react-pose'
 

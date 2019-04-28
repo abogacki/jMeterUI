@@ -5,7 +5,7 @@ import { Control } from 'bloomer/lib/elements/Form/Control';
 import { Label } from 'bloomer/lib/elements/Form/Label';
 
 export const withFormField = Component => ({ label, id, error, addons, meta, ...props }) =>
-<Field>
+  <Field>
     <Label htmlFor={id}>{label}</Label>
     <Field hasAddons>
       <Control isExpanded>

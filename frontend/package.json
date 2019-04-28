@@ -25,6 +25,7 @@
     "recompose": "^0.30.0",
     "redux": "^4.0.1",
     "redux-forms": "^1.0.0-3",
+    "redux-mock-store": "^1.5.3",
     "redux-thunk": "^2.3.0",
     "stats-lite": "^2.2.0",
     "styled-components": "^4.1.3",

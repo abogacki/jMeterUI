@@ -1,5 +1,5 @@
 import React from 'react';
-import { createFromFile as createBenchmarkFromFile } from '../redux/benchmarks/index';
+import { createFromFile as createBenchmarkFromFile } from '../redux/benchmarks/benchmarks';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 

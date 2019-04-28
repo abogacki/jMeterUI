@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { list as getTestList } from '../../../redux/benchmarks/index';
+import { list as getTestList } from '../../../redux/benchmarks/benchmarks';
 import { Title, Level, LevelItem, Box, Button, LevelLeft, LevelRight } from 'bloomer';
 import { Container } from 'bloomer/lib/layout/Container';
 import { Columns } from 'bloomer/lib/grid/Columns';
