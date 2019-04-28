@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import benchmarks from './benchmarks/index'
-import toasts from './toasts/index'
+import benchmarks from './benchmarks/benchmarks'
+import toasts from './toasts/benchmarks'
 
 
 const rootReducer = combineReducers({

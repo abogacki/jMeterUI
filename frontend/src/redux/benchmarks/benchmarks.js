@@ -2,7 +2,7 @@ import axios from 'axios'
 import { csvToJs } from '../../helpers/csvTojs'
 import groupData from './groupData'
 import calcStats from './calcStats'
-import { addAndRemoveToast } from '../toasts/index'
+import { addAndRemoveToast } from '../toasts/toasts'
 
 axios.interceptors.request.use((config) => {
   config.metadata = { startTime: new Date() }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import { create as createBenchmark, createFromForm } from '../../redux/benchmarks/index';
+import { create as createBenchmark, createFromForm } from '../../redux/benchmarks/benchmarks';
 import TestForm from '../testForm/TestForm'
 
 const TestCreateView = ({startBenchmark}) => <TestForm onSubmit={startBenchmark}/>
