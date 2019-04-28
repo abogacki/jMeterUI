@@ -2,6 +2,7 @@ import axios from 'axios'
 import { csvToJs } from '../../helpers/csvTojs'
 import groupData from './groupData'
 import calcStats from './calcStats'
+import {addAndRemoveToast} from '../toasts/index'
 
 axios.interceptors.request.use((config) => {
   config.metadata = { startTime: new Date() }
@@ -20,13 +21,9 @@ axios.interceptors.response.use((response) => {
   return Promise.reject(error);
 });
 
-const LIST_BENCHMARKS_BEGIN = 'jmeterui/benchmarks/LOAD_LIST_BEGIN'
-const LIST_BENCHMARKS_SUCCESS = 'jmeterui/benchmarks/LIST_BENCHMARKS_SUCCESS'
-const LIST_BENCHMARKS_ERROR = 'jmeterui/benchmarks/LIST_BENCHMARKS_ERROR'
+const LIST_BENCHMARKS = 'jmeterui/benchmarks/LIST_BENCHMARKS'
 const LOAD_TESTDETAILS_BEGIN = 'jmeterui/benchmarks/LOAD_TESTDETAILS_BEGIN'
 const UPDATE_DETAILS = 'jmeterui/benchmarks/UPDATE_DETAILS'
-const START_BENCHMARK = 'jmeterui/benchmarks/START_BENCHMARK'
-const END_BENCHMARK = 'jmeterui/benchmarks/END_BENCHMARK'
 
 // make nested reducers for data called "details", and for list
 const initialState = {
@@ -43,7 +40,7 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case LIST_BENCHMARKS_SUCCESS:
+    case LIST_BENCHMARKS:
       return { ...state, test: { ...state.test, list: action.payload.test } }
     case LOAD_TESTDETAILS_BEGIN:
       return { ...state, test: { ...state.test, isLoading: true }, }
@@ -62,26 +59,9 @@ export const createFromFile = ({ data, name }) => async dispatch => {
 }
 
 export const createFromForm = (formData) => async dispatch => {
-  await performTest(formData);
-
-}
-
-// perform batches of tests
-const performTest = async ({ name, baseURL, requestGroups }) => {
-  let requests = []
-  requestGroups.forEach(({ count, ...group }) => range(count).forEach(() => requests.push(group)))
-  console.log(requests);
-  const results = await Promise.all(requests.map(({ url, method }) => axios({ baseURL, url, method: 'get', headers: { 'Access-Control-Allow-Origin': '*' } })))
-  console.log(results);
-
-}
-
-const range = (index = 100) => {
-  let arr = []
-  for (let i = 0; i < index; i++) {
-    arr[i] = i;
-  }
-  return arr
+  window.location.href = '/#/'
+  // here send form data to backend, than retrive created benchmark data
+  dispatch(addAndRemoveToast({message: () => 'This functions is not implemented yet', isColor: 'danger'}))
 }
 
 export const create = ({ data, name }) => async () => {
@@ -112,14 +92,9 @@ export const create = ({ data, name }) => async () => {
 }
 
 export const list = () => async dispatch => {
-  dispatch({ type: LIST_BENCHMARKS_BEGIN })
 
   const onSuccess = response => {
-    dispatch({ type: LIST_BENCHMARKS_SUCCESS, payload: response.data })
-  }
-
-  const onError = error => {
-    dispatch({ type: LIST_BENCHMARKS_ERROR, payload: error })
+    dispatch({ type: LIST_BENCHMARKS, payload: response.data })
   }
 
   try {
@@ -128,7 +103,7 @@ export const list = () => async dispatch => {
     const tests = await axios({ method: 'get', baseURL, url })
     onSuccess(tests);
   } catch (error) {
-    onError(error);
+    console.error(error);
   }
 }
 
