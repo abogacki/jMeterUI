@@ -91,8 +91,7 @@ describe('toasts', () => {
             isColor: 'red'
           },
         ], toasts.removeToast(TOAST_ID)
-      )
-      ).toEqual(expectedState)
+      )).toEqual(expectedState)
     })
   })
 })
