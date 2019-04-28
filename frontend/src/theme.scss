@@ -16,15 +16,13 @@ body {
     margin: 0 0;
 }
 
-.toasts-container{
+.toasts-container {
   text-align: center;
   position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  right: 0;
+  z-index: 100;
   margin: 0 auto;
-  width: 1px;
+  margin-top: 10rem;
+  width: 200px;
   & > div {
     display: inline-block;
   }

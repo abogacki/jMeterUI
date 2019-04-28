@@ -2,7 +2,7 @@ import axios from 'axios'
 import { csvToJs } from '../../helpers/csvTojs'
 import groupData from './groupData'
 import calcStats from './calcStats'
-import {addAndRemoveToast} from '../toasts/index'
+import { addAndRemoveToast } from '../toasts/index'
 
 axios.interceptors.request.use((config) => {
   config.metadata = { startTime: new Date() }
@@ -61,7 +61,7 @@ export const createFromFile = ({ data, name }) => async dispatch => {
 export const createFromForm = (formData) => async dispatch => {
   window.location.href = '/#/'
   // here send form data to backend, than retrive created benchmark data
-  dispatch(addAndRemoveToast({message: () => 'This functions is not implemented yet', isColor: 'danger'}))
+  dispatch(addAndRemoveToast({ message: () => 'This feature is not yet implemented', isColor: 'danger' }))
 }
 
 export const create = ({ data, name }) => async () => {

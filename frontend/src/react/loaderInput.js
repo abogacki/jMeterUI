@@ -17,9 +17,7 @@ const loadFile = (callback = () => null) => async (e) => {
     })
 
   } catch (error) {
-
     reader.onerror = () => console.error("Error reading file")
-
   }
 }
 

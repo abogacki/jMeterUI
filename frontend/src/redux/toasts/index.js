@@ -4,7 +4,7 @@ const ADD_TOAST = 'jmeterui/toasts/ADD_TOAST'
 const REMOVE_TOAST = 'jmeterui/toasts/REMOVE_TOAST'
 
 
-export default function reducer(state = [], action) {
+export default function reducer(state = [{isColor: 'primary', message: () => 'Welcome to jMeter UI !'}], action) {
   switch (action.type) {
     case ADD_TOAST:
       return [...state, action.payload];
@@ -25,7 +25,7 @@ export const addAndRemoveToast = (options = {}) => async dispatch => {
     const newToast = createToast(options)
     dispatch({type: ADD_TOAST, payload: newToast})
 
-    const TOAST_DISPLAY_TIME = 3000
+    const TOAST_DISPLAY_TIME = 5000
     setTimeout(() => dispatch(removeToast(newToast.id)), TOAST_DISPLAY_TIME)
 
   } catch (error) {
