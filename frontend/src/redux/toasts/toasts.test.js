@@ -60,4 +60,39 @@ describe('toasts', () => {
 
     })
   })
+
+  describe('toast reducer', () => {
+    it('should return initial state', () => {
+      expect(toasts.default(undefined, {})).toEqual([])
+    })
+
+    it('should response to ADD_TOAST action', () => {
+      const reducer = toasts.default
+      const addToastAction = toasts.addToast()
+      expect(reducer([], addToastAction)).toEqual([{ ...addToastAction.payload }])
+    })
+
+    it('should response to REMOVE_TOAST action', () => {
+      const reducer = toasts.default
+      const TOAST_ID = 0
+      const expectedState = [
+        {
+          id: TOAST_ID + 1,
+          message: () => '',
+          isColor: 'red'
+        }
+      ]
+      expect(reducer(
+        [
+          ...expectedState,
+          {
+            id: TOAST_ID,
+            message: () => '',
+            isColor: 'red'
+          },
+        ], toasts.removeToast(TOAST_ID)
+      )
+      ).toEqual(expectedState)
+    })
+  })
 })
