@@ -1,4 +1,4 @@
-import { createToast } from '../../factories/toastFactory'
+import { createToast } from '../../factories/createToast'
 
 const ADD_TOAST = 'jmeterui/toasts/ADD_TOAST'
 const REMOVE_TOAST = 'jmeterui/toasts/REMOVE_TOAST'
