@@ -68,8 +68,10 @@ describe('toasts', () => {
 
     it('should response to ADD_TOAST action', () => {
       const reducer = toasts.default
-      const addToastAction = toasts.addToast()
-      expect(reducer([], addToastAction)).toEqual([{ ...addToastAction.payload }])
+      const addToastAction = toasts.addToast({ message: () => 'xD' })
+      const expectedState = [addToastAction.payload]
+
+      expect(reducer([], addToastAction)).toEqual(expectedState)
     })
 
     it('should response to REMOVE_TOAST action', () => {
