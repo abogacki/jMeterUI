@@ -2,22 +2,46 @@ import React from 'react';
 import { defaults } from 'react-chartjs-2';
 import { Box, Title, Columns, Column, Level, LevelItem, LevelLeft } from 'bloomer'
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect'
 
 defaults.global.defaultFontFamily = "'Oxygen', sans-serif";
 
+const convertTimeStampToDate = timeStampString => {
+  const timeStamp = Number(timeStampString)
+  const beginDate = new Date(timeStamp)
+  return beginDate
+}
+
+// Refactor pending
+const getCreatedAt = state => state.benchmarks.test.data._doc.createdAt
+const getCreationDate = createSelector([getCreatedAt], createdAt => new Date(createdAt))
+const getTestName = state => state.benchmarks.test.data._doc.name
+const getTestData = state => state.benchmarks.test.data.testData
+const getFirstRequestTimeStamp = createSelector([getTestData], testData => testData[0].timeStamp)
+const getLastRequestTimeStamp = createSelector([getTestData], testData => testData.slice(-1)[0].timeStamp)
+const getBeginDate = createSelector([getFirstRequestTimeStamp], convertTimeStampToDate)
+const getEndDate = createSelector([getLastRequestTimeStamp], convertTimeStampToDate)
+const getElapsed = createSelector([getBeginDate, getEndDate], (beginDate, endDate) => {
+  return Math.floor((endDate.getTime() - beginDate.getTime()) / 1000)
+})
+const getThreadNames = createSelector([getTestData], testData => {
+  const allRequestsThreads = testData.map(r => r.threadName.trim())
+  const uniqueThreads = [...new Set((allRequestsThreads))]
+  return uniqueThreads
+})
+const getRequestsSamplesCount = createSelector([getTestData], testData => testData.length)
+
 const mapStateToProps = state => ({
-  ...state.benchmarks.test.data,
+  creationDate: getCreationDate(state),
+  beginDate: getBeginDate(state),
+  endDate: getEndDate(state),
+  elapsed: getElapsed(state),
+  threads: getThreadNames(state),
+  testName: getTestName(state),
+  samplesCount: getRequestsSamplesCount(state)
 })
 
-const Info = ({ testData, ...props }) => {
-  const uploadDate = new Date(props._doc.createdAt)
-  const beginTimeStamp = Number(testData[0].timeStamp);
-  const beginDate = new Date(Math.floor(beginTimeStamp / 1000));
-  const endTimeStamp = Number(testData.slice(-1)[0].timeStamp);
-  const endDate = new Date(Math.floor(endTimeStamp / 1000));
-  const elapsed = Math.floor((endDate.getTime() - beginDate.getTime()) / 1000)
-  let threads = []
-  testData.forEach(v => threads.includes(v.threadName.trim()) ? '' : threads.push(v.threadName.trim()));
+const Info = ({ beginDate, endDate, elapsed, threads, testName, creationDate, samplesCount}) => {
   return (
     <  >
       <Title className="heading">
@@ -31,7 +55,7 @@ const Info = ({ testData, ...props }) => {
                         </div>
 
             <Title>
-              <i className="fas fa-file-signature"></i> {props._doc.name}
+              <i className="fas fa-file-signature"></i> {testName}
             </Title>
           </Box>
         </Column>
@@ -43,7 +67,7 @@ const Info = ({ testData, ...props }) => {
 
                   <div className="heading">Uploaded: </div>
                   <Title>
-                    <i className="fas fa-calendar"></i> {uploadDate.toLocaleDateString()}
+                    <i className="fas fa-calendar"></i> {creationDate.toLocaleDateString()}
                   </Title>
                 </div>
               </LevelItem>
@@ -69,7 +93,7 @@ const Info = ({ testData, ...props }) => {
                   <div>
                     <div className="heading">Requests samples count: </div>
                     <Title>
-                      <i className="fas fa-sort-amount-up"></i> {testData.length}
+                      <i className="fas fa-sort-amount-up"></i> {samplesCount}
                     </Title>
                   </div>
 
@@ -122,10 +146,4 @@ const Info = ({ testData, ...props }) => {
   )
 }
 
-const InfoConnect = props => (
-  <>
-    {props._doc && <Info {...props} />}
-  </>
-)
-
-export default connect(mapStateToProps)(InfoConnect)
+export default connect(mapStateToProps)(Info)
