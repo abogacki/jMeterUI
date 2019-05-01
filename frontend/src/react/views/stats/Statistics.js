@@ -49,7 +49,7 @@ const Row = ({ data }) => {
 }
 
 const printStringOrArray = data => {
-  if (typeof (data) == "object") {
+  if (typeof (data) === "object") {
     return data.join(', ')
   } else {
     return data
