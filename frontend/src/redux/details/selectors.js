@@ -66,7 +66,7 @@ export const get95thPercentile = makeStatsLiteSelector('percentile', 0.95)
 export const getMode = createSelector([getTimeElapsedPerRequest], elapsedValues => {
   const modes = statsLite.mode(elapsedValues)
   if (typeof (modes) === 'object') {
-    return modes.join(', ')
+    return Array.from(modes).join(', ')
   }
   return modes
 })
