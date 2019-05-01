@@ -30,7 +30,7 @@ const Div = ({ children, ...props }) => (
   </PosedDiv>
 );
 
-const HeroNavbarWrapper = ({ component, title }) => (
+const HeroNavbarWrapper = ({ component: Component, title }) => (
   <Container pose="enter" initialPose="exit">
     <Hero isColor="info" isSize="medium" className="is-bold">
       <Header />
@@ -43,7 +43,9 @@ const HeroNavbarWrapper = ({ component, title }) => (
       </HeroBody>
     </Hero>
     <Hero>
-      <Div className="section">{component}</Div>
+      <Div className="section">
+        <Component />
+      </Div>
     </Hero>
   </Container>
 );
