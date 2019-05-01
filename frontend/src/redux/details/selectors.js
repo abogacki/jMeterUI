@@ -132,7 +132,7 @@ export const getGroupLabels = createSelector(
   formattedGroups => [...new Set(formattedGroups)]
 );
 
-const reduceTestDataToGroups = testData =>
+const reduceTestDataToGroupedElapsed = testData =>
   testData.reduce((map, row) => {
     const formattedLabel = formatGroupLabel(row.label);
     if (!map.hasOwnProperty(formattedLabel)) {
@@ -144,7 +144,7 @@ const reduceTestDataToGroups = testData =>
 
 export const getElaspedPerGroup = createSelector(
   [getTestData],
-  reduceTestDataToGroups
+  reduceTestDataToGroupedElapsed
 );
 
 const calculateStatBasedOnProperty = (property, ...args) => value => {
