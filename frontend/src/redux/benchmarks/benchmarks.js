@@ -2,6 +2,7 @@ import axios from 'axios'
 import { csvToJs } from '../../helpers/csvTojs'
 import { addAndRemoveToast } from '../toasts/toasts'
 
+// attach start time to requests
 axios.interceptors.request.use((config) => {
   config.metadata = { startTime: new Date() }
   return config;
@@ -9,6 +10,7 @@ axios.interceptors.request.use((config) => {
   return Promise.reject(error);
 });
 
+// attach end time to requests
 axios.interceptors.response.use((response) => {
   response.config.metadata.endTime = new Date()
   response.elapsed = response.config.metadata.endTime - response.config.metadata.startTime
@@ -19,20 +21,17 @@ axios.interceptors.response.use((response) => {
   return Promise.reject(error);
 });
 
-const LIST_BENCHMARKS = 'jmeterui/benchmarks/LIST_BENCHMARKS'
+const UPDATE = 'jmeterui/benchmarks/UPDATE'
 
-// make nested reducers for data called "details", and for list
 const initialState = {
-  test: {
-    list: [],
-    isLoading: false
-  }
+  list: [],
+  isLoading: false
 }
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case LIST_BENCHMARKS:
-      return { ...state, test: { ...state.test, list: action.payload.test } }
+    case UPDATE:
+      return { ...state, list: action.payload.test }
     default:
       return state
   }
@@ -46,7 +45,7 @@ export const createFromFile = ({ data, name }) => async dispatch => {
 export const createFromForm = formData => async dispatch => {
   window.location.href = '/#/'
   // here send form data to backend, than retrive created benchmark data
-  console.log(formData);
+  alert(JSON.stringify(formData));
   dispatch(addAndRemoveToast({ message: () => 'This feature is not yet implemented', isColor: 'danger' }))
 }
 
@@ -76,10 +75,11 @@ export const create = ({ data, name }) => async () => {
   }
 }
 
-export const list = () => async dispatch => {
+export const update = payload => ({ type: UPDATE, payload })
 
+export const getList = () => async dispatch => {
   const onSuccess = response => {
-    dispatch({ type: LIST_BENCHMARKS, payload: response.data })
+    dispatch(update(response.data))
   }
 
   try {

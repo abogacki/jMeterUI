@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { list as getTestsList } from '../../../redux/benchmarks/benchmarks';
+import { getList as getTestsList } from '../../../redux/benchmarks/benchmarks';
 import TestCard from './TestCard'
 import TestsContainer from './TestsContainer'
 
@@ -24,7 +24,7 @@ const mapDispatchToProps = dispatch => ({
 
 
 const mapStateToProps = state => ({
-  testsLists: state.benchmarks.test.list
+  testsLists: state.benchmarks.list
 })
 
 
