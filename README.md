@@ -1,6 +1,6 @@
 # jMeterUI
 
-This application is an interface for Apache jMeter results saved in CSV. Build for the needs of a CS course on Poznan University of Technology.<br>
+This application is an interface for Apache jMeter results saved in CSV. <br>
 Technologies used:
 
 - docker
