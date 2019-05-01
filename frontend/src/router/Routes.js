@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from "react-router-dom";
 import Home from '../react/views/Home'
-import Tests from '../react/views/testsList/Tests'
+import Tests from '../react/views/testsList/TestsList'
 import About from '../react/views/About'
 import StatsIndex from '../react/views/stats/Stats'
 import CreateTest from '../react/views/TestCreateView'

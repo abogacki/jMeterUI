@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { list as getTestList } from '../../../redux/benchmarks/benchmarks';
+import { list as getTestsList } from '../../../redux/benchmarks/benchmarks';
 import TestCard from './TestCard'
 import TestsContainer from './TestsContainer'
 
-const Tests = ({ testsLists, getTestList }) => {
+const Tests = ({ testsLists, getTestsList }) => {
   useEffect(() => {
-    getTestList()
+    getTestsList()
   }, [])
   return (
     <TestsContainer>
       {testsLists && testsLists.length > 0 &&
-        testsLists.map(test, index =>
+        testsLists.map((test, index) =>
           <TestCard key={index} {...test} />
         )}
     </TestsContainer>
@@ -19,7 +19,7 @@ const Tests = ({ testsLists, getTestList }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  getTestList: () => dispatch(getTestList())
+  getTestsList: () => dispatch(getTestsList())
 })
 
 
