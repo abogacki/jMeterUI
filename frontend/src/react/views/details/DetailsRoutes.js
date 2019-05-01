@@ -4,8 +4,7 @@ import Summary from "./Summary";
 import SuccesRate from './SuccessRate'
 import ResponseTimeOverview from './ResponseTimeOverview'
 import posed, { PoseGroup } from 'react-pose';
-import ActiveThreadsOverTime from './ActiveThreadsOverTime';
-import StatisticalData from './StatisticalData';
+import Statistics from './Statistics';
 
 const RoutesContainer = posed.div({
   enter: {
@@ -21,11 +20,10 @@ const StatsRoutes = ({ location }) => {
     <PoseGroup>
       <RoutesContainer key={location.pathname}>
         <Switch location={location}>
-          <Route exact path="/stats/:testId" component={Summary} />
-          <Route exact path="/stats/:testId/succesrate" component={SuccesRate} />
-          <Route exact path="/stats/:testId/stats" component={StatisticalData} />
-          <Route exact path="/stats/:testId/responsetimeoverview" component={ResponseTimeOverview} />
-          <Route exact path="/stats/:testId/activethreadsovertime" component={ActiveThreadsOverTime} />
+          <Route exact path="/details/:testId" component={Summary} />
+          <Route exact path="/details/:testId/succesrate" component={SuccesRate} />
+          <Route exact path="/details/:testId/details" component={Statistics} />
+          <Route exact path="/details/:testId/responsetimeoverview" component={ResponseTimeOverview} />
         </Switch>
       </RoutesContainer>
     </PoseGroup>

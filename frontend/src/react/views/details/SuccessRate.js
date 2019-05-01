@@ -4,35 +4,33 @@ import { Title, Columns, Column, Panel, PanelHeading, PanelBlock } from 'bloomer
 import { connect } from 'react-redux';
 
 const convertData = data => {
-  if (data) {
-    const successfullRequests = data.filter(r => r.success);
-    const errorRequests = data.filter(r => !r.success);
-    const desiredDataModel = {
-      datasets: [{
-        data: [errorRequests.length, successfullRequests.length,],
-        backgroundColor: ['red', 'green']
-      }],
+  const successfullRequests = data.filter(r => r.success);
+  const errorRequests = data.filter(r => !r.success);
+  const desiredDataModel = {
+    datasets: [{
+      data: [errorRequests.length, successfullRequests.length,],
+      backgroundColor: ['red', 'green']
+    }],
 
-      // These labels appear in the legend and in the tooltips when hovering different arcs
-      labels: ['Error', 'Success'],
-      options: {
-        legend: {
-          position: 'right'
-        }
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: ['Error', 'Success'],
+    options: {
+      legend: {
+        position: 'right'
       }
-    };
-    return desiredDataModel
-  }
+    }
+  };
+  return desiredDataModel
 }
 
 const PieCharts = ({ data, loadBenchmark }) => {
-  const convertedData = convertData(data);
+  const convertedData = data ? convertData(data) : null;
   return (
     <Columns isMultiline>
       <Column isSize="full">
         <Title className="heading">
           Request success rate
-                    </Title>
+        </Title>
       </Column>
       <Column>
         <Panel>

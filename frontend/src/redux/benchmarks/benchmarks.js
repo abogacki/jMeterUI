@@ -69,7 +69,7 @@ export const create = ({ data, name }) => async () => {
     const testId = response.data.post._id;
 
     // navigate to new request
-    window.location.href = '/#/stats/' + testId;
+    window.location.href = '/#/details/' + testId;
 
   } catch (error) {
     console.error(error);

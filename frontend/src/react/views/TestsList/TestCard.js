@@ -54,7 +54,7 @@ const TestCard = ({ name, createdAt, testData, ...props }) => {
                 </LevelItem>
               </LevelRight>
             </Level>
-            <Button className="is-rounded is-info" href={`/#/stats/${props['_id']}`}>Details</Button>
+            <Button className="is-rounded is-info" href={`/#/details/${props['_id']}`}>Details</Button>
           </Content>
         </CardContent>
       </Box>
