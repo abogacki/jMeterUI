@@ -40,7 +40,9 @@ export default function reducer(state = initialState, action) {
 
 
 export const getBegin = () => ({ type: GET_BEGIN })
+
 export const getSuccess = () => ({ type: GET_SUCCESS })
+
 export const getError = message => ({ type: GET_ERROR, payload: message })
 
 export const updateDetails = testDetails => ({ type: UPDATE, payload: testDetails })
