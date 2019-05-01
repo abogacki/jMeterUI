@@ -57,8 +57,8 @@ const printStringOrArray = data => {
 }
 
 const mapStateToProps = state => ({
-  groupedData: state.benchmarks.test.groupedData,
-  groupedStats: state.benchmarks.test.groupedStats
+  groupedData: state.details.groupedData,
+  groupedStats: state.details.groupedStats
 })
 
 export default connect(mapStateToProps)(StatisticalData)
