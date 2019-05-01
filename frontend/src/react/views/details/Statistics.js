@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Title, Table, Columns, Column } from "bloomer";
+import { getStatisticsPerGroup } from "../../../redux/details/selectors";
 
 const StatisticalData = ({ groupedStats }) => {
   return (
@@ -46,7 +47,7 @@ const Row = ({ data }) => {
       <td>{printStringOrArray(data.median)}</td>
       <td>{printStringOrArray(data.mode)}</td>
       <td>{printStringOrArray(data.variance)}</td>
-      <td>{printStringOrArray(data.standardDeviation)}</td>
+      <td>{printStringOrArray(data.stdev)}</td>
       <td>{printStringOrArray(data.percentile)}</td>
     </tr>
   );
@@ -61,8 +62,7 @@ const printStringOrArray = data => {
 };
 
 const mapStateToProps = state => ({
-  groupedData: state.details.groupedData,
-  groupedStats: state.details.groupedStats
+  groupedStats: getStatisticsPerGroup(state)
 });
 
 export default connect(mapStateToProps)(StatisticalData);
