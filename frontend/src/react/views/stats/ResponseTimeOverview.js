@@ -2,34 +2,25 @@ import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Title, Columns, Column, Panel, PanelBlock, PanelHeading } from 'bloomer'
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 
-const convertData = data => {
-  if (data && data.length) {
-    const requestsUnder500ms = data.filter(r => r.elapsed <= 500 && r.elapsed > 0).length
-    const requestsUnder1500ms = data.filter(r => r.elapsed > 500 && r.elapsed <= 1500).length
-    const requestsOver1500ms = data.filter(r => r.elapsed > 1500).length
-    const requestErrors = data.filter(r => !r.success).length;
-    const calcData = [requestsUnder500ms, requestsUnder1500ms, requestsOver1500ms, requestErrors]
-    const labels = [
-      'Requests having response time <= 500ms',
-      'Requests having response time > 500ms and <=1500ms',
-      'Requests having response time > 1500ms',
-      'Requests in error',
-    ]
-    return {
-      labels,
-      datasets: [{
-        label: "Requests count: ",
-        backgroundColor: ["lightgreen", "yellow", "sandybrown", "tomato"],
-        data: calcData
-      }]
-    }
-
+// Refactor pending
+const ResponseTimeOvewrview = ({ requestsUnder500ms, requestsUnder1500ms, requestsOver1500ms, requestErrors }) => {
+  const data = [requestsUnder500ms, requestsUnder1500ms, requestsOver1500ms, requestErrors]  
+  const labels = [
+    'Requests having response time <= 500ms',
+    'Requests having response time > 500ms and <=1500ms',
+    'Requests having response time > 1500ms',
+    'Requests in error',
+  ]
+  const chartData = {
+    labels,
+    datasets: [{
+      label: "Requests count: ",
+      backgroundColor: ["lightgreen", "yellow", "sandybrown", "tomato"],
+      data
+    }]
   }
-}
-
-const ResponseTimeOvewrview = ({ loadBenchmark, testData }) => {
-  const convertedData = convertData(testData);
   return (
     <div>
       <Columns isMultiline>
@@ -44,10 +35,10 @@ const ResponseTimeOvewrview = ({ loadBenchmark, testData }) => {
               Response time overview
                         </PanelHeading>
             <PanelBlock className="notification is-white">
-              {convertedData && <Bar
+              {chartData && <Bar
                 options={{ legend: { display: false } }}
                 data={
-                  convertedData
+                  chartData
                 } />}
             </PanelBlock>
           </Panel>
@@ -57,8 +48,21 @@ const ResponseTimeOvewrview = ({ loadBenchmark, testData }) => {
   )
 }
 
+const getTestData = state => state.details.testData
+const createFilteredSelectorBasedOnCondition = condition => createSelector([getTestData], testData => testData.filter(condition).length)
+
+// change this functions name
+const getRequestsUnder500msCount = createFilteredSelectorBasedOnCondition(value => value.elapsed <= 500 && value.elapsed > 0)
+const getRequestsUnder1500msCount = createFilteredSelectorBasedOnCondition(value => value.elapsed > 500 && value.elapsed <= 1500)
+const getRequestsOver1500msCount = createFilteredSelectorBasedOnCondition(value => value.elapsed > 1500)
+const getRequestsErrorsCount = createFilteredSelectorBasedOnCondition(value => !value.success)
+
 const mapStateToProps = state => ({
-  ...state.benchmarks.test.data,
+  requestsUnder500ms: getRequestsUnder500msCount(state),
+  requestsUnder1500ms: getRequestsUnder1500msCount(state),
+  requestsOver1500ms: getRequestsOver1500msCount(state),
+  requestErrors: getRequestsErrorsCount(state)
 })
+
 export default connect(mapStateToProps)(ResponseTimeOvewrview)
 
