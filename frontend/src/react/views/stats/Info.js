@@ -13,12 +13,14 @@ const convertTimeStampToDate = timeStampString => {
 }
 
 // Refactor pending
-const getCreatedAt = state => state.benchmarks.test.data._doc.createdAt
-const getCreationDate = createSelector([getCreatedAt], createdAt => new Date(createdAt))
-const getTestName = state => state.benchmarks.test.data._doc.name
-const getTestData = state => state.benchmarks.test.data.testData
-const getFirstRequestTimeStamp = createSelector([getTestData], testData => testData[0].timeStamp)
-const getLastRequestTimeStamp = createSelector([getTestData], testData => testData.slice(-1)[0].timeStamp)
+const getCreatedAt = state => state.details._doc.createdAt
+const getCreationDate = createSelector(getCreatedAt, createdAt => new Date(createdAt))
+const getTestName = state => state.details._doc.name
+
+// split into details duck, create separate selectors
+const getTestData = state => state.details.testData
+const getFirstRequestTimeStamp = createSelector(getTestData, testData => testData[0].timeStamp)
+const getLastRequestTimeStamp = createSelector(getTestData, testData => testData.slice(-1)[0].timeStamp)
 const getBeginDate = createSelector([getFirstRequestTimeStamp], convertTimeStampToDate)
 const getEndDate = createSelector([getLastRequestTimeStamp], convertTimeStampToDate)
 const getElapsed = createSelector([getBeginDate, getEndDate], (beginDate, endDate) => {
@@ -26,24 +28,25 @@ const getElapsed = createSelector([getBeginDate, getEndDate], (beginDate, endDat
 })
 const getThreadNames = createSelector([getTestData], testData => {
   const allRequestsThreads = testData.map(r => r.threadName.trim())
-  const uniqueThreads = [...new Set((allRequestsThreads))]
+  const uniqueThreads = [...new Set(allRequestsThreads)]
   return uniqueThreads
 })
 const getRequestsSamplesCount = createSelector([getTestData], testData => testData.length)
 
 const mapStateToProps = state => ({
+  isLoading: state.details.isLoading,
   creationDate: getCreationDate(state),
   beginDate: getBeginDate(state),
   endDate: getEndDate(state),
   elapsed: getElapsed(state),
   threads: getThreadNames(state),
   testName: getTestName(state),
-  samplesCount: getRequestsSamplesCount(state)
+  samplesCount: getRequestsSamplesCount(state),
 })
 
-const Info = ({ beginDate, endDate, elapsed, threads, testName, creationDate, samplesCount}) => {
+const Info = ({ beginDate, endDate, elapsed, threads, testName, creationDate, samplesCount }) => {
   return (
-    <  >
+    <>
       <Title className="heading">
         <i className="fas fa-tachometer-alt"></i> Info
             </Title>
@@ -52,8 +55,7 @@ const Info = ({ beginDate, endDate, elapsed, threads, testName, creationDate, sa
           <Box className="notification is-info" >
             <div className="heading">
               Test name:
-                        </div>
-
+            </div>
             <Title>
               <i className="fas fa-file-signature"></i> {testName}
             </Title>
@@ -64,9 +66,8 @@ const Info = ({ beginDate, endDate, elapsed, threads, testName, creationDate, sa
             <Level>
               <LevelItem>
                 <div>
-
                   <div className="heading">Uploaded: </div>
-                  <Title>
+                  <Title style={{wordBreak: "initial"}}>
                     <i className="fas fa-calendar"></i> {creationDate.toLocaleDateString()}
                   </Title>
                 </div>
@@ -77,7 +78,7 @@ const Info = ({ beginDate, endDate, elapsed, threads, testName, creationDate, sa
                 <div>
 
                   <div className="heading">Performed: </div>
-                  <Title>
+                  <Title style={{wordBreak: "initial"}}>
                     <i className="fas fa-calendar"></i> {beginDate.toLocaleDateString()}
                   </Title>
                 </div>
@@ -96,11 +97,9 @@ const Info = ({ beginDate, endDate, elapsed, threads, testName, creationDate, sa
                       <i className="fas fa-sort-amount-up"></i> {samplesCount}
                     </Title>
                   </div>
-
                 </LevelItem>
               </LevelLeft>
             </Level>
-
             <Level>
               <LevelLeft>
                 <LevelItem>
@@ -113,7 +112,6 @@ const Info = ({ beginDate, endDate, elapsed, threads, testName, creationDate, sa
                 </LevelItem>
               </LevelLeft>
             </Level>
-
           </Box>
         </Column>
         <Column>
@@ -142,7 +140,7 @@ const Info = ({ beginDate, endDate, elapsed, threads, testName, creationDate, sa
           </Box>
         </Column>
       </Columns>
-    </ >
+    </>
   )
 }
 
