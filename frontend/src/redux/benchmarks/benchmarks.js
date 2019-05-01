@@ -1,7 +1,5 @@
 import axios from 'axios'
 import { csvToJs } from '../../helpers/csvTojs'
-import groupData from './groupData'
-import calcStats from './calcStats'
 import { addAndRemoveToast } from '../toasts/toasts'
 
 axios.interceptors.request.use((config) => {
@@ -22,18 +20,11 @@ axios.interceptors.response.use((response) => {
 });
 
 const LIST_BENCHMARKS = 'jmeterui/benchmarks/LIST_BENCHMARKS'
-const LOAD_TESTDETAILS_BEGIN = 'jmeterui/benchmarks/LOAD_TESTDETAILS_BEGIN'
-const UPDATE_DETAILS = 'jmeterui/benchmarks/UPDATE_DETAILS'
 
 // make nested reducers for data called "details", and for list
 const initialState = {
   test: {
     list: [],
-    data: {
-      testData: []
-    },
-    groupedData: {},
-    groupedStats: [],
     isLoading: false
   }
 }
@@ -42,12 +33,6 @@ export default function reducer(state = initialState, action) {
   switch (action.type) {
     case LIST_BENCHMARKS:
       return { ...state, test: { ...state.test, list: action.payload.test } }
-    case LOAD_TESTDETAILS_BEGIN:
-      return { ...state, test: { ...state.test, isLoading: true }, }
-    case UPDATE_DETAILS:
-      const groupedData = groupData(action.payload.testData);
-      const groupedStats = calcStats(groupedData);
-      return { ...state, test: { data: action.payload, groupedData, groupedStats, isLoading: false } }
     default:
       return state
   }
@@ -58,9 +43,10 @@ export const createFromFile = ({ data, name }) => async dispatch => {
   dispatch(create({ name, data: benchmarkDataObject }))
 }
 
-export const createFromForm = (formData) => async dispatch => {
+export const createFromForm = formData => async dispatch => {
   window.location.href = '/#/'
   // here send form data to backend, than retrive created benchmark data
+  console.log(formData);
   dispatch(addAndRemoveToast({ message: () => 'This feature is not yet implemented', isColor: 'danger' }))
 }
 
@@ -73,7 +59,6 @@ export const create = ({ data, name }) => async () => {
 
     const url = '/test/create';
     const baseURL = 'http://localhost:8080/api';
-
     const response = await axios({
       method: 'POST',
       data: newData,
@@ -100,24 +85,8 @@ export const list = () => async dispatch => {
   try {
     const url = '/test/list'
     const baseURL = 'http://localhost:8080/api'
-    const tests = await axios({ method: 'get', baseURL, url })
-    onSuccess(tests);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-export const updateDetails = (data) => ({ type: UPDATE_DETAILS, payload: data })
-
-export const getDetails = testId => async dispatch => {
-  const onSuccess = response => dispatch(updateDetails(response.data))
-
-  try {
-    dispatch({ type: LOAD_TESTDETAILS_BEGIN })
-    const url = `/test/${testId}`
-    const baseURL = 'http://localhost:8080/api'
-    const testDetails = await axios({ method: 'get', baseURL, url });
-    onSuccess(testDetails);
+    const response = await axios({ method: 'get', baseURL, url })
+    onSuccess(response);
   } catch (error) {
     console.error(error);
   }
