@@ -1,35 +1,47 @@
-import React from 'react';
-import { createFromFile as createBenchmarkFromFile } from '../redux/benchmarks/benchmarks';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux'
+import React from "react";
+import { createFromFile as createBenchmarkFromFile } from "../redux/benchmarks/benchmarks";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
-const loadFile = (callback = () => null) => async (e) => {
+const loadFile = (callback = () => null) => async e => {
   const file = await e.target.files[0];
   const reader = new FileReader();
 
   try {
-
     await reader.readAsText(file, "UTF-8");
 
-    reader.onload = (e) => callback({
-      name: file.name,
-      data: e.target.result
-    })
-
+    reader.onload = e =>
+      callback({
+        name: file.name,
+        data: e.target.result
+      });
   } catch (error) {
-    reader.onerror = () => console.error("Error reading file")
+    reader.onerror = () => console.error("Error reading file");
   }
-}
+};
 
 const mapDispatchToProps = dispatch => ({
   createBenchmarkFromFile: csv => dispatch(createBenchmarkFromFile(csv))
-})
+});
 
 const LoaderInput = ({ createBenchmarkFromFile }) => (
   <>
-    <label htmlFor="uploadBenchmark" className="button is-rounded">Upload</label>
-    <input id="uploadBenchmark" type="file" accept=".csv" className="is-hidden" onChange={loadFile(createBenchmarkFromFile)} />
+    <label htmlFor="uploadBenchmark" className="button is-rounded">
+      Upload
+    </label>
+    <input
+      id="uploadBenchmark"
+      type="file"
+      accept=".csv"
+      className="is-hidden"
+      onChange={loadFile(createBenchmarkFromFile)}
+    />
   </>
-)
+);
 
-export default withRouter(connect(null, mapDispatchToProps)(LoaderInput))
+export default withRouter(
+  connect(
+    null,
+    mapDispatchToProps
+  )(LoaderInput)
+);

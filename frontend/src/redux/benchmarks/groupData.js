@@ -3,14 +3,14 @@ const groupData = testData => {
   let groupedData = {};
 
   testData.forEach(row => {
-    const fixedLabel = row.label.replace(/-.*/, '').trim();
+    const fixedLabel = row.label.replace(/-.*/, "").trim();
     if (!labelTypes.includes(fixedLabel)) {
-      labelTypes.push(fixedLabel)
+      labelTypes.push(fixedLabel);
       groupedData[fixedLabel] = [];
     }
-    groupedData[fixedLabel].push({ ...row, groupLabel: fixedLabel })
+    groupedData[fixedLabel].push({ ...row, groupLabel: fixedLabel });
   });
   return groupedData;
-}
+};
 
-export default groupData
+export default groupData;

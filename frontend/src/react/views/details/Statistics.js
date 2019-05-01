@@ -1,15 +1,15 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Title, Table, Columns, Column } from 'bloomer';
+import React from "react";
+import { connect } from "react-redux";
+import { Title, Table, Columns, Column } from "bloomer";
 
 const StatisticalData = ({ groupedStats }) => {
   return (
     <>
       <Title className="heading">
         <i className="fas fa-percentage" /> Basic stats
-            </Title>
+      </Title>
       <Columns>
-        <Column style={{ overflowX: 'auto' }}>
+        <Column style={{ overflowX: "auto" }}>
           <Table isBordered className="is-hoverable">
             <thead>
               <tr>
@@ -24,13 +24,17 @@ const StatisticalData = ({ groupedStats }) => {
               </tr>
             </thead>
             <tbody>
-              {groupedStats && groupedStats.length > 0 && groupedStats.map((stat, index) => <Row key={index} data={stat} />)}
+              {groupedStats &&
+                groupedStats.length > 0 &&
+                groupedStats.map((stat, index) => (
+                  <Row key={index} data={stat} />
+                ))}
             </tbody>
           </Table>
         </Column>
       </Columns>
     </>
-  )
+  );
 };
 
 const Row = ({ data }) => {
@@ -45,20 +49,20 @@ const Row = ({ data }) => {
       <td>{printStringOrArray(data.standardDeviation)}</td>
       <td>{printStringOrArray(data.percentile)}</td>
     </tr>
-  )
-}
+  );
+};
 
 const printStringOrArray = data => {
-  if (typeof (data) === "object") {
-    return data.join(', ')
+  if (typeof data === "object") {
+    return data.join(", ");
   } else {
-    return data
+    return data;
   }
-}
+};
 
 const mapStateToProps = state => ({
   groupedData: state.details.groupedData,
   groupedStats: state.details.groupedStats
-})
+});
 
-export default connect(mapStateToProps)(StatisticalData)
+export default connect(mapStateToProps)(StatisticalData);

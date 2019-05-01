@@ -1,12 +1,12 @@
 const defaultOptions = {
-  isColor: 'success',
+  isColor: "success",
   message: () => null
-}
+};
 
-let id = 0
+let id = 0;
 
 export const createToast = (options = {}) => ({
   ...defaultOptions,
   ...options,
-  id: id++,
-})
+  id: id++
+});

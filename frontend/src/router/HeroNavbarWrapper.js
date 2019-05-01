@@ -1,9 +1,9 @@
-import React from 'react'
-import posed from 'react-pose';
-import Header from '../react/Header'
-import { Hero } from 'bloomer/lib/layout/Hero/Hero';
-import { HeroBody } from 'bloomer/lib/layout/Hero/HeroBody';
-import { Title } from 'bloomer/lib/elements/Title';
+import React from "react";
+import posed from "react-pose";
+import Header from "../react/Header";
+import { Hero } from "bloomer/lib/layout/Hero/Hero";
+import { HeroBody } from "bloomer/lib/layout/Hero/HeroBody";
+import { Title } from "bloomer/lib/elements/Title";
 
 const PosedDiv = posed.div({
   enter: {
@@ -14,21 +14,21 @@ const PosedDiv = posed.div({
     opacity: 0,
     x: -10
   }
-})
+});
 
 const Container = posed.div({
   enter: {
     opacity: 1,
     delayChildren: 50,
-    staggerChildren: 200,
-  },
-})
+    staggerChildren: 200
+  }
+});
 
 const Div = ({ children, ...props }) => (
-  <PosedDiv initialPose="exit" pose="enter" {...props} >
+  <PosedDiv initialPose="exit" pose="enter" {...props}>
     {children}
   </PosedDiv>
-)
+);
 
 const HeroNavbarWrapper = ({ component, title }) => (
   <Container pose="enter" initialPose="exit">
@@ -43,11 +43,9 @@ const HeroNavbarWrapper = ({ component, title }) => (
       </HeroBody>
     </Hero>
     <Hero>
-      <Div className="section">
-        {component}
-      </Div>
+      <Div className="section">{component}</Div>
     </Hero>
   </Container>
-)
+);
 
-export default HeroNavbarWrapper
+export default HeroNavbarWrapper;

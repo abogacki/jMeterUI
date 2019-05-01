@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Container,
   NavbarBurger,
@@ -9,8 +9,8 @@ import {
   NavbarItem,
   HeroHeader,
   Tabs
-} from 'bloomer';
-import { NavLink } from 'react-router-dom'
+} from "bloomer";
+import { NavLink } from "react-router-dom";
 
 const Header = () => (
   <HeroHeader>
@@ -21,23 +21,29 @@ const Header = () => (
             jMeterUi
           </NavbarItem>
           <NavbarBurger>
-            <span></span>
-            <span></span>
-            <span></span>
+            <span />
+            <span />
+            <span />
           </NavbarBurger>
         </NavbarBrand>
         <NavbarMenu id="navMenu" className="navbar-menu">
           <NavbarEnd>
             <Tabs className="is-right">
               <li>
-                <NavLink activeClassName="is-active" to="/">Home</NavLink>
+                <NavLink activeClassName="is-active" to="/">
+                  Home
+                </NavLink>
               </li>
 
               <li>
-                <NavLink activeClassName="is-active" to="/tests">Tests</NavLink>
+                <NavLink activeClassName="is-active" to="/tests">
+                  Tests
+                </NavLink>
               </li>
               <li>
-                <NavLink activeClassName="is-active" to="/about">About</NavLink>
+                <NavLink activeClassName="is-active" to="/about">
+                  About
+                </NavLink>
               </li>
             </Tabs>
           </NavbarEnd>
@@ -45,6 +51,6 @@ const Header = () => (
       </Container>
     </Navbar>
   </HeroHeader>
-)
+);
 
-export default Header
+export default Header;

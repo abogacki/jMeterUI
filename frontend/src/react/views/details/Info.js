@@ -1,7 +1,15 @@
-import React from 'react';
-import { defaults } from 'react-chartjs-2';
-import { Box, Title, Columns, Column, Level, LevelItem, LevelLeft } from 'bloomer'
-import { connect } from 'react-redux';
+import React from "react";
+import { defaults } from "react-chartjs-2";
+import {
+  Box,
+  Title,
+  Columns,
+  Column,
+  Level,
+  LevelItem,
+  LevelLeft
+} from "bloomer";
+import { connect } from "react-redux";
 import {
   getCreationDate,
   getTestName,
@@ -9,25 +17,31 @@ import {
   getEndDate,
   getElapsed,
   getThreadNames,
-  getRequestsSamplesCount,
-} from '../../../redux/details/selectors'
+  getRequestsSamplesCount
+} from "../../../redux/details/selectors";
 
 defaults.global.defaultFontFamily = "'Oxygen', sans-serif";
 
-const Info = ({ beginDate, endDate, elapsed, threads, testName, creationDate, samplesCount }) => {
+const Info = ({
+  beginDate,
+  endDate,
+  elapsed,
+  threads,
+  testName,
+  creationDate,
+  samplesCount
+}) => {
   return (
     <>
       <Title className="heading">
-        <i className="fas fa-tachometer-alt"></i> Info
-            </Title>
+        <i className="fas fa-tachometer-alt" /> Info
+      </Title>
       <Columns isMultiline>
         <Column>
-          <Box className="notification is-info" >
-            <div className="heading">
-              Test name:
-            </div>
+          <Box className="notification is-info">
+            <div className="heading">Test name:</div>
             <Title>
-              <i className="fas fa-file-signature"></i> {testName}
+              <i className="fas fa-file-signature" /> {testName}
             </Title>
           </Box>
         </Column>
@@ -37,8 +51,9 @@ const Info = ({ beginDate, endDate, elapsed, threads, testName, creationDate, sa
               <LevelItem>
                 <div>
                   <div className="heading">Uploaded: </div>
-                  <Title style={{wordBreak: "initial"}}>
-                    <i className="fas fa-calendar"></i> {creationDate.toLocaleDateString()}
+                  <Title style={{ wordBreak: "initial" }}>
+                    <i className="fas fa-calendar" />{" "}
+                    {creationDate.toLocaleDateString()}
                   </Title>
                 </div>
               </LevelItem>
@@ -46,10 +61,10 @@ const Info = ({ beginDate, endDate, elapsed, threads, testName, creationDate, sa
             <Level>
               <LevelItem>
                 <div>
-
                   <div className="heading">Performed: </div>
-                  <Title style={{wordBreak: "initial"}}>
-                    <i className="fas fa-calendar"></i> {beginDate.toLocaleDateString()}
+                  <Title style={{ wordBreak: "initial" }}>
+                    <i className="fas fa-calendar" />{" "}
+                    {beginDate.toLocaleDateString()}
                   </Title>
                 </div>
               </LevelItem>
@@ -64,7 +79,7 @@ const Info = ({ beginDate, endDate, elapsed, threads, testName, creationDate, sa
                   <div>
                     <div className="heading">Requests samples count: </div>
                     <Title>
-                      <i className="fas fa-sort-amount-up"></i> {samplesCount}
+                      <i className="fas fa-sort-amount-up" /> {samplesCount}
                     </Title>
                   </div>
                 </LevelItem>
@@ -92,17 +107,20 @@ const Info = ({ beginDate, endDate, elapsed, threads, testName, creationDate, sa
             </Title>
             <Level>
               <LevelLeft>
-
                 <LevelItem>
                   <div>
                     <div className="heading">started: </div>
-                    <Title isSize={5}>{`${beginDate.getHours()}:${beginDate.getMinutes()}:${beginDate.getSeconds()}`}</Title>
+                    <Title
+                      isSize={5}
+                    >{`${beginDate.getHours()}:${beginDate.getMinutes()}:${beginDate.getSeconds()}`}</Title>
                   </div>
                 </LevelItem>
                 <LevelItem>
                   <div>
                     <div className="heading">finished: </div>
-                    <Title isSize={5}>{`${endDate.getHours()}:${endDate.getMinutes()}:${endDate.getSeconds()}`}</Title>
+                    <Title
+                      isSize={5}
+                    >{`${endDate.getHours()}:${endDate.getMinutes()}:${endDate.getSeconds()}`}</Title>
                   </div>
                 </LevelItem>
               </LevelLeft>
@@ -111,8 +129,8 @@ const Info = ({ beginDate, endDate, elapsed, threads, testName, creationDate, sa
         </Column>
       </Columns>
     </>
-  )
-}
+  );
+};
 
 const mapStateToProps = state => ({
   isLoading: state.details.isLoading,
@@ -122,7 +140,7 @@ const mapStateToProps = state => ({
   elapsed: getElapsed(state),
   threads: getThreadNames(state),
   testName: getTestName(state),
-  samplesCount: getRequestsSamplesCount(state),
-})
+  samplesCount: getRequestsSamplesCount(state)
+});
 
-export default connect(mapStateToProps)(Info)
+export default connect(mapStateToProps)(Info);

@@ -1,19 +1,18 @@
 //  src/theme.scss
 
-@import 'bulma/sass/utilities/initial-variables.sass';
+@import "bulma/sass/utilities/initial-variables.sass";
 
 // your customization as described in the Bulma docs
 
-
-@import 'bulma/bulma.sass';
+@import "bulma/bulma.sass";
 
 body {
-    background: whitesmoke
+  background: whitesmoke;
 }
 
-.hero{
-    padding: 0 0;
-    margin: 0 0;
+.hero {
+  padding: 0 0;
+  margin: 0 0;
 }
 
 .toasts-container {

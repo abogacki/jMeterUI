@@ -1,18 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './theme.scss';
-import '../node_modules/font-awesome/css/font-awesome.min.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./theme.scss";
+import "../node_modules/font-awesome/css/font-awesome.min.css";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
 
-const rootEl = document.getElementById('root');
+const rootEl = document.getElementById("root");
 
 ReactDOM.render(<App />, rootEl);
 
-
 if (module.hot) {
-  module.hot.accept('./App', () => {
-    const NextApp = require('./App').default;
+  module.hot.accept("./App", () => {
+    const NextApp = require("./App").default;
     ReactDOM.render(<NextApp />, rootEl);
   });
 }
