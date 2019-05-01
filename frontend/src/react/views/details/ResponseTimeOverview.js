@@ -2,7 +2,12 @@ import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Title, Columns, Column, Panel, PanelBlock, PanelHeading } from 'bloomer'
 import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
+import { 
+  getRequestsUnder500msCount,
+  getRequestsUnder1500msCount,
+  getRequestsOver1500msCount,
+  getRequestsErrorsCount 
+} from '../../../redux/details/selectors'
 
 // Refactor pending
 const ResponseTimeOvewrview = ({ requestsUnder500ms, requestsUnder1500ms, requestsOver1500ms, requestErrors }) => {
@@ -27,7 +32,7 @@ const ResponseTimeOvewrview = ({ requestsUnder500ms, requestsUnder1500ms, reques
         <Column isSize="full">
           <Title className="heading">
             Response time overview
-                    </Title>
+          </Title>
         </Column>
         <Column>
           <Panel>
@@ -47,15 +52,6 @@ const ResponseTimeOvewrview = ({ requestsUnder500ms, requestsUnder1500ms, reques
     </div>
   )
 }
-
-const getTestData = state => state.details.testData
-const createFilteredSelectorBasedOnCondition = condition => createSelector([getTestData], testData => testData.filter(condition).length)
-
-// change this functions name
-const getRequestsUnder500msCount = createFilteredSelectorBasedOnCondition(value => value.elapsed <= 500 && value.elapsed > 0)
-const getRequestsUnder1500msCount = createFilteredSelectorBasedOnCondition(value => value.elapsed > 500 && value.elapsed <= 1500)
-const getRequestsOver1500msCount = createFilteredSelectorBasedOnCondition(value => value.elapsed > 1500)
-const getRequestsErrorsCount = createFilteredSelectorBasedOnCondition(value => !value.success)
 
 const mapStateToProps = state => ({
   requestsUnder500ms: getRequestsUnder500msCount(state),

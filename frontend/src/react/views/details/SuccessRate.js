@@ -2,18 +2,12 @@ import React from 'react';
 import { Doughnut, } from 'react-chartjs-2';
 import { Title, Columns, Column, Panel, PanelHeading, PanelBlock } from 'bloomer'
 import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
+import {
+  getSuccessfullRequests,
+  getUnsuccessfullRequests,
+} from '../../../redux/details/selectors'
 
-const getTestData = state => state.details.testData
-const getSuccessfullRequests = createSelector([getTestData], data => data.filter(r => r.success))
-const getUnsuccessfullRequests = createSelector([getTestData], data => data.filter(r => !r.success))
-
-const mapStateToProps = state => ({
-  successfullRequests: getSuccessfullRequests(state),
-  unsuccessfullRequets: getUnsuccessfullRequests(state),
-})
-
-const PieCharts = ({ successfullRequests, unsuccessfullRequets }) => {
+const SuccessRate = ({ successfullRequests, unsuccessfullRequets }) => {
   const chartData = {
     datasets: [{
       data: [unsuccessfullRequets.length, successfullRequests.length,],
@@ -47,5 +41,10 @@ const PieCharts = ({ successfullRequests, unsuccessfullRequets }) => {
   )
 }
 
-export default connect(mapStateToProps)(PieCharts)
+const mapStateToProps = state => ({
+  successfullRequests: getSuccessfullRequests(state),
+  unsuccessfullRequets: getUnsuccessfullRequests(state),
+})
+
+export default connect(mapStateToProps)(SuccessRate)
 
