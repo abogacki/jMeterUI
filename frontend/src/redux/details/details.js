@@ -1,67 +1,72 @@
-import axios from 'axios'
-import groupData from '../benchmarks/groupData'
-import calcStats from '../benchmarks/calcStats'
+import axios from "axios";
+import groupData from "../benchmarks/groupData";
+import calcStats from "../benchmarks/calcStats";
 
 const initialState = {
   groupedData: {},
   groupedStats: [],
   testData: [],
   _doc: {
-    createdAt: '',
-    name: ''
+    createdAt: "",
+    name: ""
   },
   isLoading: false
-}
+};
 
-const UPDATE = 'jmeterui/details/UPDATE'
-const GET_BEGIN = 'jmeterui/details/GET_BEGIN'
-const GET_SUCCESS = 'jmeterui/details/GET_SUCCESS'
-const GET_ERROR = 'jmeterui/details/GET_ERROR'
+const UPDATE = "jmeterui/details/UPDATE";
+const GET_BEGIN = "jmeterui/details/GET_BEGIN";
+const GET_SUCCESS = "jmeterui/details/GET_SUCCESS";
+const GET_ERROR = "jmeterui/details/GET_ERROR";
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case GET_BEGIN:
-      return { ...state, isLoading: true }
+      return { ...state, isLoading: true };
     case GET_ERROR:
       console.error(action.payload);
-      return { ...state, isLoading: false }
+      return { ...state, isLoading: false };
     case GET_SUCCESS:
-      return { ...state, isLoading: false }
+      return { ...state, isLoading: false };
     case UPDATE:
       // refactor groupedData/Stats to selectors
       const groupedData = groupData(action.payload.testData);
       const groupedStats = calcStats(groupedData);
-      return { _doc:action.payload._doc, testData: action.payload.testData, groupedData, groupedStats }
+      return {
+        _doc: action.payload._doc,
+        testData: action.payload.testData,
+        groupedData,
+        groupedStats
+      };
     default:
-      return state
+      return state;
   }
 }
 
+export const getBegin = () => ({ type: GET_BEGIN });
 
+export const getSuccess = () => ({ type: GET_SUCCESS });
 
-export const getBegin = () => ({ type: GET_BEGIN })
+export const getError = message => ({ type: GET_ERROR, payload: message });
 
-export const getSuccess = () => ({ type: GET_SUCCESS })
-
-export const getError = message => ({ type: GET_ERROR, payload: message })
-
-export const updateDetails = testDetails => ({ type: UPDATE, payload: testDetails })
+export const updateDetails = testDetails => ({
+  type: UPDATE,
+  payload: testDetails
+});
 
 export const getDetails = testId => async dispatch => {
   const onSuccess = response => {
-    dispatch(getSuccess())
-    dispatch(updateDetails(response.data))
-  }
+    dispatch(getSuccess());
+    dispatch(updateDetails(response.data));
+  };
 
   try {
-    dispatch(getBegin())
+    dispatch(getBegin());
 
-    const url = `/test/${testId}`
-    const baseURL = 'http://localhost:8080/api'
-    const response = await axios({ method: 'get', baseURL, url });
+    const url = `/test/${testId}`;
+    const baseURL = "http://localhost:8080/api";
+    const response = await axios({ method: "get", baseURL, url });
     onSuccess(response);
   } catch (error) {
-    dispatch(getError)
+    dispatch(getError);
   }
-
-}
+};
