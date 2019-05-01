@@ -40,7 +40,7 @@ const Info = ({
         <Column>
           <Box className="notification is-info">
             <div className="heading">Test name:</div>
-            <Title>
+            <Title isSize={5}>
               <i className="fas fa-file-signature" /> {testName}
             </Title>
           </Box>
@@ -50,8 +50,8 @@ const Info = ({
             <Level>
               <LevelItem>
                 <div>
-                  <div className="heading">Uploaded: </div>
-                  <Title style={{ wordBreak: "initial" }}>
+                  <p className="heading">Uploaded: </p>
+                  <Title isSize={5}>
                     <i className="fas fa-calendar" />{" "}
                     {creationDate.toLocaleDateString()}
                   </Title>
@@ -61,8 +61,8 @@ const Info = ({
             <Level>
               <LevelItem>
                 <div>
-                  <div className="heading">Performed: </div>
-                  <Title style={{ wordBreak: "initial" }}>
+                  <p className="heading">Performed: </p>
+                  <Title isSize={5}>
                     <i className="fas fa-calendar" />{" "}
                     {beginDate.toLocaleDateString()}
                   </Title>
@@ -77,8 +77,8 @@ const Info = ({
               <LevelLeft>
                 <LevelItem>
                   <div>
-                    <div className="heading">Requests samples count: </div>
-                    <Title>
+                    <p className="heading">Requests samples count: </p>
+                    <Title isSize={5}>
                       <i className="fas fa-sort-amount-up" /> {samplesCount}
                     </Title>
                   </div>
@@ -89,8 +89,8 @@ const Info = ({
               <LevelLeft>
                 <LevelItem>
                   <div>
-                    <div className="heading">Threads: </div>
-                    <Title>
+                    <p className="heading">Threads: </p>
+                    <Title isSize={5}>
                       <i className="fas fa-code-branch" /> {threads.length}
                     </Title>
                   </div>
@@ -101,15 +101,15 @@ const Info = ({
         </Column>
         <Column>
           <Box className="notification is-link">
-            <div className="heading">Time elapsed: </div>
-            <Title>
+            <p className="heading">Time elapsed: </p>
+            <Title isSize={5}>
               <i className="fas fa-clock" /> ~{`${elapsed} sec`}
             </Title>
             <Level>
               <LevelLeft>
                 <LevelItem>
                   <div>
-                    <div className="heading">started: </div>
+                    <p className="heading">started: </p>
                     <Title
                       isSize={5}
                     >{`${beginDate.getHours()}:${beginDate.getMinutes()}:${beginDate.getSeconds()}`}</Title>
@@ -117,7 +117,7 @@ const Info = ({
                 </LevelItem>
                 <LevelItem>
                   <div>
-                    <div className="heading">finished: </div>
+                    <p className="heading">finished: </p>
                     <Title
                       isSize={5}
                     >{`${endDate.getHours()}:${endDate.getMinutes()}:${endDate.getSeconds()}`}</Title>
