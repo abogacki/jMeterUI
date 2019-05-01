@@ -2,29 +2,30 @@ import React from 'react';
 import { Doughnut, } from 'react-chartjs-2';
 import { Title, Columns, Column, Panel, PanelHeading, PanelBlock } from 'bloomer'
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 
-const convertData = data => {
-  const successfullRequests = data.filter(r => r.success);
-  const errorRequests = data.filter(r => !r.success);
-  const desiredDataModel = {
+const getTestData = state => state.details.testData
+const getSuccessfullRequests = createSelector([getTestData], data => data.filter(r => r.success))
+const getUnsuccessfullRequests = createSelector([getTestData], data => data.filter(r => !r.success))
+
+const mapStateToProps = state => ({
+  successfullRequests: getSuccessfullRequests(state),
+  unsuccessfullRequets: getUnsuccessfullRequests(state),
+})
+
+const PieCharts = ({ successfullRequests, unsuccessfullRequets }) => {
+  const chartData = {
     datasets: [{
-      data: [errorRequests.length, successfullRequests.length,],
+      data: [unsuccessfullRequets.length, successfullRequests.length,],
       backgroundColor: ['red', 'green']
     }],
-
-    // These labels appear in the legend and in the tooltips when hovering different arcs
     labels: ['Error', 'Success'],
     options: {
       legend: {
         position: 'right'
       }
     }
-  };
-  return desiredDataModel
-}
-
-const PieCharts = ({ data, loadBenchmark }) => {
-  const convertedData = data ? convertData(data) : null;
+  }
   return (
     <Columns isMultiline>
       <Column isSize="full">
@@ -36,9 +37,9 @@ const PieCharts = ({ data, loadBenchmark }) => {
         <Panel>
           <PanelHeading>
             Request success rate
-                        </PanelHeading>
+          </PanelHeading>
           <PanelBlock className="notification is-white">
-            {data && <Doughnut data={convertedData} />}
+            <Doughnut data={chartData} />
           </PanelBlock>
         </Panel>
       </Column>
@@ -46,8 +47,5 @@ const PieCharts = ({ data, loadBenchmark }) => {
   )
 }
 
-const mapStateToProps = state => ({
-  data: state.benchmarks.test.data.testData,
-})
 export default connect(mapStateToProps)(PieCharts)
 
