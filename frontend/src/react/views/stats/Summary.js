@@ -1,56 +1,16 @@
 import React from 'react';
 import { defaults } from 'react-chartjs-2';
-import { Title, Columns, Column, Box, } from 'bloomer'
 import { connect } from 'react-redux';
-import statsLite from 'stats-lite';
 import Info from './Info'
+import OverallStats from './OverallStats'
 
 defaults.global.defaultFontFamily = "'Oxygen', sans-serif";
-
-const OverallStats = ({ testData, benchmark, details }) => {
-  const values = testData.map(r => r.elapsed);
-  const statistics = {
-    mean: Math.round(statsLite.mean(values) * 100) / 100,
-    median: Math.round(statsLite.median(values) * 100) / 100,
-    mode: statsLite.mode(values),
-    standardDeviation: Math.round(statsLite.stdev(values) * 100) / 100,
-    '85thpercentile': Math.round(statsLite.percentile(values, 0.85) * 100) / 100,
-    '90thpercentile': Math.round(statsLite.percentile(values, 0.90) * 100) / 100,
-    '95thpercentile': Math.round(statsLite.percentile(values, 0.95) * 100) / 100,
-  }
-
-  console.log(details);
-
-  return (
-    <>
-      <Title className="heading">
-        Overall statistics
-        </Title>
-      <Box className="notification is-danger">
-        <Columns>
-          {Object.keys(statistics).filter(stat => stat !== "mode").map((stat, index) =>
-            <Column key={index}>
-              <div>
-                <div className="heading">{stat} [ms]</div>
-                <Title isSize={5}>
-                  {statistics[stat].toString()}
-                </Title>
-              </div>
-            </Column>)}
-        </Columns>
-      </Box>
-    </>
-  )
-}
-
 
 const mapStateToProps = state => ({
   testData: state.details.testData,
   isLoading: state.details.isLoading,
-  details: state.details
 })
 
-const Summary = connect(mapStateToProps)(OverallStats)
 
 export default connect(mapStateToProps)(({ isLoading, testData }) => {
   return (
@@ -59,10 +19,10 @@ export default connect(mapStateToProps)(({ isLoading, testData }) => {
         (
           <>
             <Info />
-            <Summary />
+            <OverallStats />
           </>
         )
-        : 'Loading'
+        : <div className="loader" />
       }
     </>
   )
