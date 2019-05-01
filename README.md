@@ -3,12 +3,12 @@
 This application is an interface for Apache jMeter results saved in CSV. Build for the needs of a CS course on Poznan University of Technology.<br>
 Technologies used:
 
-*   docker
-*   node.js
-*   keystoneJS
-*   react
-*   redux
-*   mongoDB
+- docker
+- node.js
+- keystoneJS
+- react
+- redux
+- mongoDB
 
 ## Available Scripts
 
@@ -28,7 +28,7 @@ Builds and runs the app in development mode at once.
 
 ## How to use it?
 
-- To upload new test, log in to your account, and upload file `.csv` file by clicking UPLOAD button. 
+- Upload `.csv` file by clicking UPLOAD button (Sample csv files are contained in `/sampleCSV`).
 - Explore test results, calculate median, mode, percentiles and more in the stats tab
 - Analyze response success rate and request time overview with charts
 - Compare tests
@@ -47,52 +47,56 @@ User interface layer is build with contenerized CreateReactApp project. It comun
 
 ## Database
 
-Database contains three tables based on Mongoose ODM models (User, Test, Request). <br> 
+Database contains three tables based on Mongoose ODM models (User, Test, Request). <br>
 
 ### User
+
 User model contains fields such as:
-* name
-* email
-* password
-* canAccessKeystone
 
-Name, email and password field are obtained by registration process. The "canAccessKeystone" parameter is bool variable stored for validation purposes. User can access admin application, only if this parameter is set to true. For this application migration creates admin account with credentials: 
+- name
+- email
+- password
+- canAccessKeystone
 
-#### name: admin 
+Name, email and password field are obtained by registration process. The "canAccessKeystone" parameter is bool variable stored for validation purposes. User can access admin application, only if this parameter is set to true. For this application migration creates admin account with credentials:
+
+#### name: admin
+
 #### password: admin
 
-
 ### Test
-Test table consists of: 
-* user
-* name
-* createdAt
-* file
-* testData
+
+Test table consists of:
+
+- user
+- name
+- createdAt
+- file
+- testData
 
 User field stores Id from User table, which is automatically added by the backend application to Test when it is uploaded.
 Name field represents the name of the `.csv` file used to upload the test. TestData field is an array of id's from Request table.
 
 ### Request
+
 Request table contains:
-* id
-* IdleTime
-* Latency
-* allThreads
-* bytes
-* dataType
-* elapsed
-* failureMessage
-* label
-* responseCode
-* responseMessage
-* sentBytes
-* success
-* threadName
-* timeStamp
+
+- id
+- IdleTime
+- Latency
+- allThreads
+- bytes
+- dataType
+- elapsed
+- failureMessage
+- label
+- responseCode
+- responseMessage
+- sentBytes
+- success
+- threadName
+- timeStamp
 
 The complete database schema has been presented below:
 
 ![Alt text](docs/dbSchema.png?raw=true "DB Schema")
-
-
