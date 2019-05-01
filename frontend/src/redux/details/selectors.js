@@ -122,37 +122,29 @@ export const getUnsuccessfullRequests = createSelector(
 
 export const getFormattedGroups = createSelector(
   [getTestData],
-  testData => testData.map(v => v.label.replace(/-.*/, "").trim())
+  testData => testData.map(r => formatGroupLabel(r.label))
 );
+
+const formatGroupLabel = label => label.replace(/-.*/, "").trim();
 
 export const getGroupLabels = createSelector(
   [getFormattedGroups],
   formattedGroups => [...new Set(formattedGroups)]
 );
 
+const reduceTestDataToGroups = testData =>
+  testData.reduce((map, row) => {
+    const formattedLabel = formatGroupLabel(row.label);
+    if (!map.hasOwnProperty(formattedLabel)) {
+      map[formattedLabel] = [];
+    }
+    map[formattedLabel].push(row.elapsed);
+    return map;
+  }, {});
+
 export const getElaspedPerGroup = createSelector(
   [getTestData],
-  testData => {
-    let groups = {};
-
-    testData.forEach(row => {
-      // changes jmeter thread/group names,
-      // provided with "-" and number after group/thread
-      const formatLabel = unformattedLabel =>
-        unformattedLabel.replace(/-.*/, "").trim();
-
-      const groupLabel = formatLabel(row.label);
-
-      // if doesn't exist create property
-      if (!groups.hasOwnProperty(groupLabel)) {
-        groups[groupLabel] = [];
-      }
-
-      groups[groupLabel].push(row.elapsed);
-    });
-
-    return groups;
-  }
+  reduceTestDataToGroups
 );
 
 const calculateStatBasedOnProperty = (property, ...args) => value => {
