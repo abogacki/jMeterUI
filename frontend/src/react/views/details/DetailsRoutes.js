@@ -1,9 +1,9 @@
 import React from "react";
 import { Switch, Route, withRouter } from "react-router-dom";
+import posed, { PoseGroup } from "react-pose";
 import Summary from "./Summary";
 import SuccesRate from "./SuccessRate";
 import ResponseTimeOverview from "./ResponseTimeOverview";
-import posed, { PoseGroup } from "react-pose";
 import Statistics from "./Statistics";
 
 const RoutesContainer = posed.div({
