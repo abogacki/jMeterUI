@@ -4,8 +4,6 @@
  */
 
 import axios from "axios";
-import groupData from "../benchmarks/groupData";
-import calcStats from "../benchmarks/calcStats";
 
 const initialState = {
   groupedData: {},
@@ -33,14 +31,9 @@ export default function reducer(state = initialState, action) {
     case GET_SUCCESS:
       return { ...state, isLoading: false };
     case UPDATE:
-      // refactor groupedData/Stats to selectors
-      const groupedData = groupData(action.payload.testData);
-      const groupedStats = calcStats(groupedData);
       return {
         _doc: action.payload._doc,
-        testData: action.payload.testData,
-        groupedData,
-        groupedStats
+        testData: action.payload.testData
       };
     default:
       return state;
