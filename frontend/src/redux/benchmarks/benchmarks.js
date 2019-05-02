@@ -29,6 +29,8 @@ axios.interceptors.response.use(
 );
 
 const UPDATE = "jmeterui/benchmarks/UPDATE";
+const LOADING_BEGIN = "jmeterui/benchmarks/LOADING_BEGIN";
+const LOADING_END = "jmeterui/benchmarks/LOADING_END";
 
 const initialState = {
   list: [],
@@ -37,6 +39,10 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
+    case LOADING_BEGIN:
+      return { ...state, isLoading: true };
+    case LOADING_END:
+      return { ...state, isLoading: false };
     case UPDATE:
       return { ...state, list: action.payload.test };
     default:
@@ -87,6 +93,10 @@ export const create = ({ data, name }) => async () => {
 
 export const update = payload => ({ type: UPDATE, payload });
 
+export const loadingBegin = () => ({ type: LOADING_BEGIN });
+
+export const loadingEnd = () => ({ type: LOADING_END });
+
 export const getList = () => async dispatch => {
   const onSuccess = response => {
     dispatch(update(response.data));
@@ -96,8 +106,12 @@ export const getList = () => async dispatch => {
     const url = "/test/list";
     const baseURL = "http://localhost:8080/api";
     const response = await axios({ method: "get", baseURL, url });
+
+    dispatch(loadingBegin());
     onSuccess(response);
   } catch (error) {
     console.error(error);
+  } finally {
+    dispatch(loadingEnd());
   }
 };
