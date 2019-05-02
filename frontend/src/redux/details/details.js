@@ -65,6 +65,6 @@ export const getDetails = testId => async dispatch => {
     const response = await axios({ method: "get", baseURL, url });
     onSuccess(response);
   } catch (error) {
-    dispatch(getError);
+    dispatch(getError(error));
   }
 };
