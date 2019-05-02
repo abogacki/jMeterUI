@@ -1,3 +1,8 @@
+/**
+ * This is an implementation of redux-ducks
+ * see https://github.com/erikras/ducks-modular-redux for more info
+ */
+
 import { createToast } from "../../factories/createToast";
 
 export const ADD_TOAST = "jmeterui/toasts/ADD_TOAST";

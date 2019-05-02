@@ -1,3 +1,8 @@
+/**
+ * This is an implementation of redux-ducks
+ * see https://github.com/erikras/ducks-modular-redux for more info
+ */
+
 import axios from "axios";
 import groupData from "../benchmarks/groupData";
 import calcStats from "../benchmarks/calcStats";

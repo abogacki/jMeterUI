@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import convertTimeStampToDate from "./convertTimeStampStringToDate";
+import convertTimeStampToDate from "../../helpers/convertTimeStampStringToDate";
 import transformToDecimal from "../../helpers/transformToDecimal";
 import statsLite from "stats-lite";
 
